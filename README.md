@@ -1,2 +1,3 @@
-# aita
-Am I the asshole? An application that allows you to post a problem that has been eating at your conscience and makes a prediction on whether you are the one being the asshol
+# Am I the Asshole? (aita)
+
+Ever asked yourself, *"Am I the asshole in this situation?!"* This application helps you answer that. Based on the famous subreddit [/r/AmItheAsshole](https://www.reddit.com/r/AmItheAsshole/)
