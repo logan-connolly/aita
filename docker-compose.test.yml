@@ -24,7 +24,7 @@ services:
       - POSTGRES_HOST=db
       - POSTGRES_DB=aita_db
     command: uvicorn app.main:app --reload
-    depends:
+    depends_on:
       - db
 
 
