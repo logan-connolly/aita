@@ -31,7 +31,7 @@ async def get_posts(label: str = None):
 @router.post("/", response_model=schemas.PostDB, status_code=HTTP_201_CREATED)
 async def add_post(payload: schemas.PostCreate):
     try:
-        return await models.Post.objects.create(**vars(payload))
+        return await models.Post.objects.create(**payload.dict())
     except UniqueViolationError:
         raise HTTPException(status_code=HTTP_400_BAD_REQUEST, detail="Post exists")
 
@@ -47,7 +47,8 @@ async def get_post(id: int):
 @router.put("/{id}/", response_model=schemas.PostDB, status_code=HTTP_200_OK)
 async def update_post(id: int, payload: schemas.PostUpdate):
     post = await get_post(id)
-    await post.update(**vars(payload))
+    payload = {k: v for k, v in payload.dict().items() if v is not None}
+    await post.update(**payload)
     return post
 
 
