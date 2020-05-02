@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "api"
 version = "0.1.0"
-description = ""
+description = "Fastapi api for processing reddit posts from /r/AmItheAsshole"
 authors = ["Logan Connolly <logan.connolly@protonmail.com>"]
 
 [tool.poetry.dependencies]
