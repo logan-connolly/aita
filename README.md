@@ -1,4 +1,6 @@
-# Am I the Asshole? (aita)
+#  Am I the Asshole? (aita) 
+
+[![Build Status](https://travis-ci.com/logan-connolly/aita.svg?branch=master)](https://travis-ci.com/logan-connolly/aita)
 
 Ever asked yourself, *"Am I the asshole in this situation?!"* This application helps you answer that. Based on the famous subreddit [/r/AmItheAsshole](https://www.reddit.com/r/AmItheAsshole/)
 
