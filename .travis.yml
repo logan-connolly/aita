@@ -13,4 +13,4 @@ env:
 
 script:
   - docker-compose -f $FILE up -d
-  - docker-compose -f $FILE exec api pytest -vv tests
+  - docker-compose -f $FILE exec api pytest tests
