@@ -39,11 +39,3 @@ def host():
 async def session():
     async with aiohttp.ClientSession() as session:
         yield session
-
-
-@pytest.fixture(scope="class")
-def create_tables():
-    engine = create_engine(settings.URI)
-    metadata.create_all(engine)
-    yield
-    metadata.drop_all(engine)

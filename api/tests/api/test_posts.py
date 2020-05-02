@@ -6,7 +6,6 @@ from json import dumps
 payload = dict(post_id="1234", label="NTA", text="Once upon a time...")
 
 
-@pytest.mark.usefixtures("create_tables")
 class TestSource:
     @pytest.mark.asyncio
     async def test_add_post(self, host, event_loop, server, session):
@@ -37,7 +36,7 @@ class TestSource:
         payload["label"] = "YTA"
 
         async with session.put(
-            f"{host}/posts/{payload['id']}", data=dumps(payload)
+            f"{host}/posts/{payload['id']}", data=dumps(dict(label="YTA"))
         ) as resp:
             assert resp.status == 200
             assert await resp.json() == payload
