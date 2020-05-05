@@ -6,14 +6,11 @@ import aiohttp
 import pytest
 import uvicorn
 
-from sqlalchemy import create_engine
-
 from app import main
-from app.db.database import metadata
 from app.core.config import settings
 
 
-@pytest.yield_fixture(scope="module")
+@pytest.fixture(scope="module")
 def event_loop(request):
     loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop
@@ -30,7 +27,7 @@ async def server():
     proc.kill()
 
 
-@pytest.yield_fixture(scope="module")
+@pytest.fixture(scope="module")
 def host():
     yield f"http://127.0.0.1:5000{settings.API_V1_STR}"
 
