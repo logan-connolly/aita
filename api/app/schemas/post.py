@@ -20,7 +20,7 @@ class PostBase(BaseModel):
 
 
 # properties to receive on item creation
-class PostCreate(BaseModel):
+class PostCreate(PostBase):
     post_id: str
     label: LabelEnum
     text: str
