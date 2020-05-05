@@ -1,4 +1,4 @@
-from orm import Model, Integer, String
+from orm import Model, Integer, String, Text
 
 from app.db.database import database, metadata
 
@@ -11,4 +11,4 @@ class Post(Model):
     id = Integer(primary_key=True)
     post_id = Integer(unique=True)
     label = String(max_length=255, unique=True)
-    text = String(max_length=2048)
+    text = Text()
