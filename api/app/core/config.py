@@ -13,6 +13,7 @@ class PostgresSettings(BaseSettings):
 
 class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
+    MODEL_PATH: str = "example/path"
 
     PG = PostgresSettings()
     URI: PostgresDsn = f"postgres://{PG.user}:{PG.password}@{PG.host}/{PG.db}"
