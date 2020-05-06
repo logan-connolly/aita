@@ -14,7 +14,7 @@ services:
 
   api:
     build: ./api
-    image: aita_api:dev
+    image: lvconnolly/aita_api:alpine3.10
     ports:
       - ${API_PORT}:8000
     volumes:
