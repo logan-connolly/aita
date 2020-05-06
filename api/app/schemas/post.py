@@ -10,11 +10,13 @@ class LabelEnum(str, Enum):
     ESH = "ESH"
     NAH = "NAH"
     INFO = "INFO"
+    NONE = "NONE"
 
 
 # shared properties
 class PostBase(BaseModel):
     post_id: Optional[str] = None
+    title: Optional[str] = None
     label: Optional[LabelEnum] = None
     text: Optional[str] = None
 
@@ -22,6 +24,7 @@ class PostBase(BaseModel):
 # properties to receive on item creation
 class PostCreate(PostBase):
     post_id: str
+    title: str
     label: LabelEnum
     text: str
 
@@ -35,6 +38,7 @@ class PostUpdate(PostBase):
 class PostDBBase(PostBase):
     id: int
     post_id: str
+    title: str
     label: str
     text: str
 
