@@ -1,29 +1,26 @@
 from fastapi import FastAPI
 
 from .api.api_v1.routes import api_router
-from .core.config import settings
-from .db.database import database, engine, metadata
-from .services.model import AITAClassifier
+from .core.config import api_settings, settings
+from .core.event_handlers import start_app_handler, stop_app_handler
+from .db.database import engine, metadata
 
 
-def get_app():
-    app = FastAPI(title="AITA", openapi_url=f"{settings.API_V1_STR}/openapi.json")
+metadata.create_all(engine)
 
-    metadata.create_all(engine)
+
+def get_app() -> FastAPI:
+    app = FastAPI(**api_settings)
 
     @app.on_event("startup")
     async def startup():
-        model = AITAClassifier(settings.MODEL_PATH)
-        app.state.model = model
-        await database.connect()
+        await start_app_handler(app)
 
     @app.on_event("shutdown")
     async def shutdown():
-        app.state.model = None
-        await database.disconnect()
+        await stop_app_handler(app)
 
     app.include_router(api_router, prefix=settings.API_V1_STR)
-
     return app
 
 
