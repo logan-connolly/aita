@@ -10,9 +10,11 @@ class AITAClassifier:
         self.path = path
         self.model = self._load_model()
 
-    def _load_model(self):
-        logger.debug(f"Loading model from: {self.path}")
+    def __repr__(self):
+        class_name = self.__class__.__name__
+        return f"{class_name}(path='{self.path}')"
 
+    def _load_model(self):
         def model(tokens):
             return "YTA" if len(tokens) > 5 else "NTA"
         return model
