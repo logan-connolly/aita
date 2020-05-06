@@ -12,7 +12,12 @@ class PostgresSettings(BaseSettings):
 
 
 class Settings(BaseSettings):
+    DEBUG: bool = True
+
+    API_TITLE: str = "AITA"
     API_V1_STR: str = "/api/v1"
+    OPENAPI_URL: str = f"{API_V1_STR}/openapi.json"
+
     MODEL_PATH: str = "example/path"
 
     PG = PostgresSettings()
@@ -23,3 +28,10 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+
+
+api_settings = {
+    "title": settings.API_TITLE,
+    "openapi_url": settings.OPENAPI_URL,
+    "debug": settings.DEBUG,
+}
