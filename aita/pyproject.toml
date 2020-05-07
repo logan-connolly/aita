@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "aita"
+version = "0.1.0"
+description = "CLI for processing AITA posts from reddit"
+authors = ["Logan Connolly <logan.connolly@protonmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+typer = "^0.2.1"
+praw = "^7.0.0"
+requests = "^2.23.0"
+spacy = "^2.2.4"
+pydantic = {extras = ["dotenv"], version = "^1.5.1"}
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.4.1"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

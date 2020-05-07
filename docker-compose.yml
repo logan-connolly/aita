@@ -12,9 +12,24 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB} 
 
+  cli:
+    build: ./aita
+    image: lvconnolly/aita_cli:alpine3.10
+    tty: true
+    volumes:
+      - ./aita:/app
+    environment:
+      - API_HOST=${API_HOST}
+      - REDDIT_CLIENT_ID=${REDDIT_CLIENT_ID}
+      - REDDIT_CLIENT_SECRET=${REDDIT_CLIENT_SECRET}
+      - REDDIT_PASSWORD=${REDDIT_PASSWORD}
+      - REDDIT_USERNAME=${REDDIT_USERNAME}
+    links:
+      - "api:api"
+
   api:
     build: ./api
-    image: aita_api:dev
+    image: lvconnolly/aita_api:alpine3.10
     ports:
       - ${API_PORT}:8000
     volumes:
