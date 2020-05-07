@@ -18,6 +18,12 @@ services:
     tty: true
     volumes:
       - ./aita:/app
+    environment:
+      - API_HOST=${API_HOST}
+      - REDDIT_CLIENT_ID=${REDDIT_CLIENT_ID}
+      - REDDIT_CLIENT_SECRET=${REDDIT_CLIENT_SECRET}
+      - REDDIT_PASSWORD=${REDDIT_PASSWORD}
+      - REDDIT_USERNAME=${REDDIT_USERNAME}
     links:
       - "api:api"
 
