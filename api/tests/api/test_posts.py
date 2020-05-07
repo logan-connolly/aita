@@ -3,7 +3,7 @@ import pytest
 from json import dumps
 
 
-post = dict(post_id="1234", label="NTA", text="Once upon a time...")
+post = dict(post_id="1234", title="AITA?", label="NTA", text="Once upon a time")
 
 
 class TestPost:
