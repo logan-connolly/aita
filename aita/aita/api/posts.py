@@ -1,5 +1,5 @@
 from collections import Counter
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 import requests
 
@@ -17,9 +17,9 @@ class ApiPosts:
             return resp.json()
         return None
 
-    def count_labels(self):
-        cnt = Counter()
+    def count_labels(self) -> List[Tuple[str, int]]:
+        count = Counter()
         for post in self.posts:
             label = post.get("label")
-            cnt[label] += 1
-        return cnt.most_common()
+            count[label] += 1
+        return count.most_common()
