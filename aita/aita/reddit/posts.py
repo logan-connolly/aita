@@ -12,7 +12,10 @@ from ..config import api_settings
 
 
 class RedditPosts:
-    """Extract posts from /r/AmItheAsshole subreddit"""
+    """Extract posts from /r/AmItheAsshole subreddit.
+
+    :param reddit: connection object with valid credentials
+    """
 
     subreddit_name = "AmItheAsshole"
     url = f"http://{api_settings.host}/api/v1/posts/"

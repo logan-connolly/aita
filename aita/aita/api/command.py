@@ -18,7 +18,13 @@ def count():
         typer.echo(styled_output(label, count, total))
 
 
-def styled_output(label, count, total):
+def styled_output(label: str, count: int, total: int) -> str:
+    """Stylize output to be printed to console.
+
+    :param label: contains AITA flair label
+    :param count: how many exist in database
+    :param total: total amount of AITA items in database
+    """
     fmt_label = typer.style(label, fg=typer.colors.WHITE, bold=True)
     fmt_count = typer.style(str(count), fg=typer.colors.BLUE)
     percent = round(count / total, 3)

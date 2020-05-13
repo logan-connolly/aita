@@ -17,9 +17,10 @@ app = typer.Typer()
 
 @app.command()
 def add(n_posts: int, category: str = "top") -> None:
-    """ Add AITA posts to DB
+    """Add AITA reddit posts to database via api.
 
-    --category for selecting "top", "hot" or "new" posts
+    :param n_posts: how many posts to add to database
+    :param category: choose which filter to apply to subreddit
     """
     rp = RedditPosts(reddit)
     posts = rp.get_posts(n_posts, category)
@@ -36,7 +37,11 @@ def add(n_posts: int, category: str = "top") -> None:
 
 
 def handle_post(rp: RedditPosts, post: Submission) -> str:
-    """Post to AITA api and return tag based on status code"""
+    """Post to AITA api and return tag based on status code.
+
+    :param rp: subreddit connection object
+    :param post: reddit post submission from AITA subreddit
+    """
     if post.link_flair_text == "META":
         return "ignored"
     resp = rp.add_to_api(post)
@@ -48,12 +53,16 @@ def handle_post(rp: RedditPosts, post: Submission) -> str:
 
 
 @whitespace(title="Number of AITA posts added to DB:")
-def style_output(cnt: Counter) -> None:
+def style_output(counter: Counter) -> None:
+    """Format text output to print out to console.
+
+    :param counter: Counter object from collections
+    """
     new_posts = typer.style("new post:", fg=typer.colors.GREEN)
     existed = typer.style("existed:", fg=typer.colors.RED)
     ignored = typer.style("ignored:", fg=typer.colors.YELLOW)
     errors = typer.style("errors: ", fg=typer.colors.BRIGHT_RED)
-    typer.echo(f"{new_posts}\t {cnt['added']}")
-    typer.echo(f"{existed}\t {cnt['existed']}")
-    typer.echo(f"{ignored}\t {cnt['ignored']}")
-    typer.echo(f"{errors}\t {cnt['error']}")
+    typer.echo(f"{new_posts}\t {counter['added']}")
+    typer.echo(f"{existed}\t {counter['existed']}")
+    typer.echo(f"{ignored}\t {counter['ignored']}")
+    typer.echo(f"{errors}\t {counter['error']}")

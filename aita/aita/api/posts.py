@@ -7,6 +7,11 @@ from ..config import api_settings
 
 
 class ApiPosts:
+    """Class for connecting with AITA api.
+
+    :param host: where api is hosted
+    """
+
     def __init__(self, host: str):
         self.url = f"http://{api_settings.host}/api/v1/posts/"
         self.posts = self._posts()
