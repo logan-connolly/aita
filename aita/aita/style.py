@@ -5,7 +5,6 @@ import typer
 
 def whitespace(title: str = None):
     """Add whitespace and formatting around console output.
-
     :param title: Optional title to print to console
     """
 
@@ -14,8 +13,7 @@ def whitespace(title: str = None):
         def inner(*args, **kwargs):
             typer.echo()
             if title:
-                title_fmt = typer.style(title, bold=True)
-                typer.echo(f"{title_fmt}\n")
+                typer.echo(f"{typer.style(title, bold=True)}\n")
             func(*args, **kwargs)
             typer.echo()
 

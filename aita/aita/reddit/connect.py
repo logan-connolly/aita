@@ -5,7 +5,6 @@ from ..config import RedditConfig
 
 def connect_reddit(settings: RedditConfig):
     """Function for connecting to reddit with configuration.
-
     :param settings: reddit configuration needed to connect with reddit via praw
     """
     return Reddit(
