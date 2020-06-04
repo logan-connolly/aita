@@ -1,112 +1,19 @@
-# `aita`
+#  Am I the Asshole? (aita) 
 
-**Usage**:
+[![Build Status](https://travis-ci.com/logan-connolly/aita.svg?branch=master)](https://travis-ci.com/logan-connolly/aita)
 
-```console
-$ aita [OPTIONS] COMMAND [ARGS]...
-```
+Ever asked yourself, *"Am I the asshole in this situation?!"* This application helps you answer that. Based on the famous subreddit [/r/AmItheAsshole](https://www.reddit.com/r/AmItheAsshole/)
 
-**Options**:
+To find out if you are the asshole, simply go to the [website](https://github.com/logan-connolly/aita), type in the argument that you are having with someone (more detail the better) and click submit. The output should be a prediction with one of the following categories:
 
-* `--install-completion`: Install completion for the current shell.
-* `--show-completion`: Show completion for the current shell, to copy it or customize the installation.
-* `--help`: Show this message and exit.
+- **YTA**: You're the Asshole
+- **NTA**: Not the Asshole
+- **ESH**: Everyone Sucks here
+- **NAH**: No Assholes here
+- **INFO**: Not Enough Info
 
-**Commands**:
+In order to help explain why a decision was made, the input text will also be highlighted on areas that contributed to the respective decision.
 
-* `api`
-* `reddit`
-* `train`
+# Disclaimer 
 
-## `aita api`
-
-**Usage**:
-
-```console
-$ aita api [OPTIONS] COMMAND [ARGS]...
-```
-
-**Options**:
-
-* `--help`: Show this message and exit.
-
-**Commands**:
-
-* `count`: Count number of AITA posts in database by...
-
-### `aita api count`
-
-Count number of AITA posts in database by label
-
-**Usage**:
-
-```console
-$ aita api count [OPTIONS] HOST
-```
-
-**Options**:
-
-* `--help`: Show this message and exit.
-
-## `aita reddit`
-
-**Usage**:
-
-```console
-$ aita reddit [OPTIONS] COMMAND [ARGS]...
-```
-
-**Options**:
-
-* `--help`: Show this message and exit.
-
-**Commands**:
-
-* `add`: Add AITA reddit posts to database via api.
-
-### `aita reddit add`
-
-Add AITA reddit posts to database via api.
-:param n_posts: how many posts to add to database
-:param category: choose which filter to apply to subreddit
-
-**Usage**:
-
-```console
-$ aita reddit add [OPTIONS] HOST N_POSTS
-```
-
-**Options**:
-
-* `--category TEXT`
-* `--help`: Show this message and exit.
-
-## `aita train`
-
-**Usage**:
-
-```console
-$ aita train [OPTIONS] COMMAND [ARGS]...
-```
-
-**Options**:
-
-* `--help`: Show this message and exit.
-
-**Commands**:
-
-* `train`: Count number of AITA posts in database by...
-
-### `aita train train`
-
-Count number of AITA posts in database by label
-
-**Usage**:
-
-```console
-$ aita train train [OPTIONS] HOST
-```
-
-**Options**:
-
-* `--help`: Show this message and exit.
+No data that you pass to Asshole Predictor will be saved. The model will only be trained on posts from [/r/AmItheAsshole](https://www.reddit.com/r/AmItheAsshole/), which are monitored to prevent users from posting personally-identifying information like names, numbers, addresses, etc.
