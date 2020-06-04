@@ -1,13 +1,17 @@
 [tool.poetry]
 name = "aita"
 version = "0.1.0"
-description = "CLI for processing AITA posts from reddit"
+description = "Process AITA posts from reddit"
 authors = ["Logan Connolly <logan.connolly@protonmail.com>"]
 license = "MIT"
+readme = "README.md"
+
+[tool.poetry.scripts]
+aita = "aita.main:app"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-typer = "^0.2.1"
+typer = {extras = ["all"], version = "^0.2.1"}
 praw = "^7.0.0"
 requests = "^2.23.0"
 spacy = "^2.2.4"
