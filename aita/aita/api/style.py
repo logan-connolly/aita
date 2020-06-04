@@ -1,9 +1,6 @@
 import typer
 
-from ..style import whitespace
 
-
-@whitespace(title="Number of AITA posts in DB:")
 def styled_count(label: str, count: int, total: int) -> str:
     """Stylize output to be printed to console.
     :param label: contains AITA flair label
