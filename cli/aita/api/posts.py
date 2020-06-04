@@ -3,8 +3,6 @@ from typing import Dict, List, Tuple
 
 import requests
 
-from ..config import api_settings
-
 
 class ApiPosts:
     """Class for connecting with AITA api.
@@ -12,7 +10,7 @@ class ApiPosts:
     """
 
     def __init__(self, host: str):
-        self.url = f"http://{api_settings.host}/api/v1/posts/"
+        self.url = f"http://{host}/api/v1/posts/"
 
     def posts(self) -> List[Dict[str, str]]:
         resp = requests.get(self.url)

@@ -8,7 +8,7 @@ from praw import Reddit
 from praw.models import Submission
 from praw.models.listing.generator import ListingGenerator
 
-from ..config import api_settings
+from .config import RedditConfig
 
 
 class RedditPosts:
@@ -17,15 +17,27 @@ class RedditPosts:
     """
 
     subreddit_name = "AmItheAsshole"
-    url = f"http://{api_settings.host}/api/v1/posts/"
 
-    def __init__(self, reddit: Reddit):
-        self.reddit = reddit
-        self.subreddit = reddit.subreddit(self.subreddit_name)
+    def __init__(self, config_file: str):
+        self.reddit = self.connect(config_file)
+        self.subreddit = self.reddit.subreddit(self.subreddit_name)
 
     def __repr__(self) -> str:
         class_name = self.__class__.__name__
         return f"{class_name}(reddit=<Reddit Instance>)"
+
+    def connect(self, config_file: str) -> Reddit:
+        """Function for connecting to reddit with configuration.
+        :param settings: reddit configuration needed to connect with reddit via praw
+        """
+        settings = RedditConfig(config_file)
+        return Reddit(
+            user_agent=f"app by /u/{settings.username}",
+            client_id=settings.client_id,
+            client_secret=settings.client_secret.get_secret_value(),
+            password=settings.password.get_secret_value(),
+            username=settings.username,
+        )
 
     def get_posts(self, n_posts: int, category: str = "top") -> ListingGenerator:
         """Get AITA posts from reddit.
@@ -40,12 +52,13 @@ class RedditPosts:
             return self.subreddit.hot(limit=n_posts)
         return self.subreddit.top("all", limit=n_posts)
 
-    def add_to_api(self, post: Submission) -> int:
+    def add_to_api(self, host: str, post: Submission) -> int:
         """Add reddit post to AITA api and get status code.
         :param post: AITA reddit post.
         """
         info = self.extract_post_info(post)
-        resp = requests.post(self.url, data=json.dumps(info))
+        url = f"http://{host}/api/v1/posts/"
+        resp = requests.post(url, data=json.dumps(info))
         return resp.status_code
 
     def convert_label(self, flair: str) -> str:
@@ -72,16 +85,16 @@ class RedditPosts:
             "text": post.selftext,
         }
 
-    def tag_post_status(self, post: Submission) -> str:
+    def tag_post_status(self, host: str, post: Submission) -> str:
         """Post to AITA api and return tag based on status code.
         :param post: reddit post submission from AITA subreddit
         """
         if post.link_flair_text == "META":
             return "ignored"
 
-        resp = self.add_to_api(post)
-        if resp.status_code == 201:
+        status_code = self.add_to_api(host, post)
+        if status_code == 201:
             return "added"
-        if resp.status_code == 400:
+        if status_code == 400:
             return "existed"
         return "error"
