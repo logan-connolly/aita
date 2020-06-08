@@ -79,7 +79,7 @@ class RedditPosts:
         :param post: extract information from post to pass as payload to api
         """
         return {
-            "post_id": post.id,
+            "id": post.id,
             "title": post.title,
             "label": self.convert_label(post.link_flair_text),
             "text": post.selftext,
