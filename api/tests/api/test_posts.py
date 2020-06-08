@@ -3,7 +3,7 @@ import pytest
 from json import dumps
 
 
-post = dict(post_id="1234", title="AITA?", label="NTA", text="Once upon a time")
+post = dict(id="xkl123", title="AITA?", label="NTA", text="Once upon a time")
 
 
 class TestPost:
@@ -13,7 +13,6 @@ class TestPost:
         async with session.post(f"{host}/posts/", data=dumps(post)) as resp:
             assert resp.status == 201
             response = await resp.json()
-            post.update({"id": response.get("id")})
             assert response == post
 
     @pytest.mark.asyncio
