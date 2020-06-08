@@ -15,7 +15,7 @@ class LabelEnum(str, Enum):
 
 # shared properties
 class PostBase(BaseModel):
-    post_id: Optional[str] = None
+    id: Optional[str] = None
     title: Optional[str] = None
     label: Optional[LabelEnum] = None
     text: Optional[str] = None
@@ -23,7 +23,7 @@ class PostBase(BaseModel):
 
 # properties to receive on item creation
 class PostCreate(PostBase):
-    post_id: str
+    id: str
     title: str
     label: LabelEnum
     text: str
@@ -34,10 +34,9 @@ class PostUpdate(PostBase):
     pass
 
 
-# properties hared by models stored in DB
+# properties shared by models stored in DB
 class PostDBBase(PostBase):
-    id: int
-    post_id: str
+    id: str
     title: str
     label: str
     text: str
