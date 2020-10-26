@@ -1,5 +1,5 @@
 from databases import Database
-from sqlalchemy import create_engine, MetaData
+from sqlalchemy import MetaData
 
 from app.core.config import settings
 

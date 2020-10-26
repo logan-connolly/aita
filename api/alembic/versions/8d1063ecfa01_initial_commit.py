@@ -1,7 +1,6 @@
 """Initial commit
 
 Revision ID: 8d1063ecfa01
-Revises: 
 Create Date: 2020-10-26 18:47:04.617473
 
 """
@@ -10,7 +9,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8d1063ecfa01'
+revision = "8d1063ecfa01"
 down_revision = None
 branch_labels = None
 depends_on = None

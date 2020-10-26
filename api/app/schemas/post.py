@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Optional
+from typing import Optional, Union
 
 from pydantic import BaseModel
 
@@ -17,7 +17,7 @@ class LabelEnum(str, Enum):
 class PostBase(BaseModel):
     id: Optional[str] = None
     title: Optional[str] = None
-    label: Optional[LabelEnum] = None
+    label: Optional[Union[LabelEnum, str]] = None
     text: Optional[str] = None
 
 

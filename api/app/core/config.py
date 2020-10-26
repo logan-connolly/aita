@@ -1,4 +1,4 @@
-from pydantic import BaseSettings, PostgresDsn
+from pydantic import BaseSettings
 
 
 class PostgresSettings(BaseSettings):
@@ -21,17 +21,10 @@ class Settings(BaseSettings):
     MODEL_PATH: str = "example/path"
 
     PG = PostgresSettings()
-    URI: PostgresDsn = f"postgres://{PG.user}:{PG.password}@{PG.host}/{PG.db}"
+    URI: str = f"postgres://{PG.user}:{PG.password}@{PG.host}/{PG.db}"
 
     class Config:
         case_sensitive = True
 
 
 settings = Settings()
-
-
-api_settings = {
-    "title": settings.API_TITLE,
-    "openapi_url": settings.OPENAPI_URL,
-    "debug": settings.DEBUG,
-}
