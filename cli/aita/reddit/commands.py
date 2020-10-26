@@ -20,7 +20,7 @@ def add(host: str, n_posts: int, category: str = "top") -> None:
     rp = RedditPosts(config_file)
     posts = rp.get_posts(n_posts, category)
 
-    count = Counter()
+    count: Counter = Counter()
     for _, post in tqdm(enumerate(posts)):
         tag = rp.tag_post_status(host, post)
         count[tag] += 1

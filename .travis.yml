@@ -11,7 +11,8 @@ before_script:
 
 script:
   - mypy --ignore-missing-imports ./api
-  - flake8 --max-line-length=88 ./api ./scraper
+  - mypy --ignore-missing-imports ./cli
+  - flake8 --max-line-length=88 ./api ./cli
   - docker volume prune -f
   - docker-compose pull
   - docker-compose up -d api
