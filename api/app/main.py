@@ -3,10 +3,6 @@ from fastapi import FastAPI
 from .api.api_v1.routes import api_router
 from .core.config import api_settings, settings
 from .core.event_handlers import start_app_handler, stop_app_handler
-from .db.database import engine, metadata
-
-
-metadata.create_all(engine)
 
 
 def get_app() -> FastAPI:
