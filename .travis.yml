@@ -6,11 +6,16 @@ services:
   - docker
 
 before_script:
-  pip install docker-compose
-
-env:
-  - FILE=docker-compose.test.yml
+  - pip install -U pip setuptools
+  - pip install docker docker-compose mypy flake8
 
 script:
-  - docker-compose -f $FILE up -d
-  - docker-compose -f $FILE exec api pytest tests
+  - mypy --ignore-missing-imports ./api
+  - mypy --ignore-missing-imports ./cli
+  - flake8 --max-line-length=88 ./api ./cli
+  - docker volume prune -f
+  - docker-compose pull
+  - docker-compose up -d api
+  - sleep 10
+  - docker-compose exec api pytest -v tests
+  - docker-compose down -v

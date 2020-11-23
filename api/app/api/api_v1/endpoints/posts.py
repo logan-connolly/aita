@@ -1,5 +1,5 @@
 import random
-from typing import List
+from typing import Any, Dict, List
 
 from asyncpg.exceptions import UniqueViolationError
 from fastapi import APIRouter, HTTPException
@@ -62,8 +62,8 @@ async def update_post(id: str, payload: schemas.PostUpdate):
     :param payload:
     """
     post = await get_post(id)
-    payload = {k: v for k, v in payload.dict().items() if v is not None}
-    await post.update(**payload)
+    updates: Dict[str, Any] = {k: v for k, v in payload.dict().items() if v is not None}
+    await post.update(**updates)
     return post
 
 
