@@ -18,25 +18,25 @@ class RedditPosts:
 
     subreddit_name = "AmItheAsshole"
 
-    def __init__(self, config_file: str):
-        self.reddit = self.connect(config_file)
+    def __init__(self):
+        self.reddit = self.connect()
         self.subreddit = self.reddit.subreddit(self.subreddit_name)
 
     def __repr__(self) -> str:
         class_name = self.__class__.__name__
         return f"{class_name}(reddit=<Reddit Instance>)"
 
-    def connect(self, config_file: str) -> Reddit:
+    def connect(self) -> Reddit:
         """Function for connecting to reddit with configuration.
         :param settings: reddit configuration needed to connect with reddit via praw
         """
-        settings = RedditConfig(config_file)
+        settings = RedditConfig(".env")
         return Reddit(
             user_agent=f"app by /u/{settings.username}",
             client_id=settings.client_id,
-            client_secret=settings.client_secret.get_secret_value(),
-            password=settings.password.get_secret_value(),
+            client_secret=settings.client_secret,
             username=settings.username,
+            password=settings.password,
         )
 
     def get_posts(self, n_posts: int, category: str = "top") -> ListingGenerator:

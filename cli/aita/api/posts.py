@@ -1,7 +1,10 @@
 from collections import Counter
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple, Union
 
 import requests
+
+PostList = List[Dict[str, str]]
+PostCounts = List[Tuple[str, int]]
 
 
 class ApiPosts:
@@ -12,16 +15,18 @@ class ApiPosts:
     def __init__(self, host: str):
         self.url = f"http://{host}/api/v1/posts/"
 
-    def posts(self) -> List[Dict[str, str]]:
+    def posts(self) -> Optional[PostList]:
+        """Get posts from api"""
         resp = requests.get(self.url)
         if resp.status_code == 200:
             return resp.json()
-        raise ConnectionError("Could not retrieve posts from API")
 
-    def count_labels(self) -> List[Tuple[str, int]]:
+    def count_labels(self) -> Optional[PostCounts]:
         """Count up AITA labels in AITA DB"""
-        count: Counter = Counter()
-        for post in self.posts():
-            label = post.get("label")
-            count[label] += 1
-        return count.most_common()
+        count = Counter()
+        posts = self.posts()
+        if posts:
+            for post in posts:
+                label = post.get("label")
+                count[label] += 1
+            return count.most_common()
