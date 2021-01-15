@@ -20,13 +20,15 @@ class ApiPosts:
         resp = requests.get(self.url)
         if resp.status_code == 200:
             return resp.json()
+        return None
 
     def count_labels(self) -> Optional[PostCounts]:
         """Count up AITA labels in AITA DB"""
-        count = Counter()
+        count: Counter = Counter()
         posts = self.posts()
         if posts:
             for post in posts:
                 label = post.get("label")
                 count[label] += 1
             return count.most_common()
+        return None

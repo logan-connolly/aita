@@ -10,4 +10,7 @@ app = typer.Typer()
 def train(host: str):
     """Count number of AITA posts in database by label"""
     data = ApiPosts(host).posts()
-    typer.echo(data[0])
+    if data:
+        typer.echo(data[0])
+    else:
+        typer.echo("No data")
