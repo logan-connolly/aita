@@ -16,8 +16,7 @@ def add(host: str, n_posts: int, category: str = "top") -> None:
     :param n_posts: how many posts to add to database
     :param category: choose which filter to apply to subreddit
     """
-    config_file = typer.prompt("Path to config")
-    rp = RedditPosts(config_file)
+    rp = RedditPosts()
     posts = rp.get_posts(n_posts, category)
 
     count: Counter = Counter()

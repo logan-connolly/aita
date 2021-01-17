@@ -18,7 +18,7 @@ router = APIRouter()
 
 
 @router.get("/", response_model=List[schemas.PostDB], status_code=HTTP_200_OK)
-async def get_posts(label: str = None, n: int = 5):
+async def get_posts(label: str = None, limit: int = None):
     """Get list of of AITA posts.
     :param label: filter by AITA label
     :param n: limit the number of posts returned
@@ -26,10 +26,11 @@ async def get_posts(label: str = None, n: int = 5):
     posts = await models.Post.objects.all()
     if not posts:
         raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail="No posts found")
+    n_posts = len(posts)
     if label:
         posts = [post for post in posts if post.label == label]
-    sample_size = min(len(posts), n)
-    return random.sample(posts, sample_size)
+    n_samples = limit if limit and limit < n_posts and limit > 0 else n_posts
+    return random.sample(posts, n_samples)
 
 
 @router.post("/", response_model=schemas.PostDB, status_code=HTTP_201_CREATED)

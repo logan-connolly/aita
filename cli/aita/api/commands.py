@@ -13,7 +13,10 @@ app = typer.Typer()
 def count(host: str):
     """Count number of AITA posts in database by label"""
     counts = ApiPosts(host).count_labels()
-    total = sum(count for _, count in counts)
-    for label, count in counts:
-        output = styled_count(label, count, total)
-        typer.echo(output)
+    if not counts:
+        typer.echo("No posts found in DB")
+    else:
+        total = sum(count for _, count in counts)
+        for label, count in counts:
+            output = styled_count(label, count, total)
+            typer.echo(output)
