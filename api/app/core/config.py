@@ -1,3 +1,4 @@
+from typing import List
 from pydantic import BaseSettings
 
 
@@ -11,7 +12,17 @@ class PostgresSettings(BaseSettings):
         env_prefix = "POSTGRES_"
 
 
+class WebSettings(BaseSettings):
+    port: int
+
+    class Config:
+        env_prefix = "WEB_"
+
+
 class Settings(BaseSettings):
+    pg = PostgresSettings()
+    web = WebSettings()
+
     DEBUG: bool = True
 
     API_TITLE: str = "AITA"
@@ -20,8 +31,12 @@ class Settings(BaseSettings):
 
     MODEL_PATH: str = "example/path"
 
-    PG = PostgresSettings()
-    URI: str = f"postgres://{PG.user}:{PG.password}@{PG.host}/{PG.db}"
+    URI: str = f"postgres://{pg.user}:{pg.password}@{pg.host}/{pg.db}"
+
+    BACKEND_CORS_ORIGINS: List[str] = [
+        "http://localhost",
+        f"http://localhost:{web.port}",
+    ]
 
     class Config:
         case_sensitive = True
