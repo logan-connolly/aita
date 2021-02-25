@@ -8,6 +8,7 @@
         </li>
       </ul>
       <h1 class="story-classification">{{ story.label }}</h1>
+      <a :href="commentsLink">Comments</a>
     </div>
   </div>
 </template>
@@ -22,7 +23,10 @@ export default {
     };
   },
   computed: {
-    ...mapState("story", ["story"])
+    ...mapState("story", ["story"]),
+    commentsLink() {
+      return "https://www.reddit.com/r/AmItheAsshole/comments/" + this.story.id;
+    }
   },
   created() {
     this.$store.dispatch("story/loadStory");
