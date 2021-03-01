@@ -27,13 +27,13 @@ async def get_posts(label: str = None, limit: int = None):
     if not posts:
         raise HTTPException(HTTP_404_NOT_FOUND, "No posts found")
 
+    n_posts = len(posts)
     if label:
         posts = [post for post in posts if post.label == label]
     if limit:
-        n_posts = len(posts)
-        n_samples = limit if limit < n_posts else n_posts
+        n_posts = limit if limit < n_posts else n_posts
 
-    return random.sample(posts, n_samples)
+    return random.sample(posts, n_posts)
 
 
 @router.post("/", response_model=schemas.PostDB, status_code=HTTP_201_CREATED)
