@@ -8,13 +8,14 @@ services:
 before_script:
   - pip install -U pip setuptools
   - pip install docker docker-compose mypy flake8
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 script:
   - mypy --ignore-missing-imports ./api
   - mypy --ignore-missing-imports ./cli
   - flake8 --max-line-length=88 ./api ./cli
   - docker volume prune -f
-  - docker-compose pull
+  - docker-compose pull api
   - docker-compose up -d api
   - sleep 10
   - docker-compose exec api pytest -v tests
