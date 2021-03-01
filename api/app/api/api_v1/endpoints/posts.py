@@ -13,66 +13,60 @@ from starlette.status import (
 
 from app import models, schemas
 
-
 router = APIRouter()
 
 
 @router.get("/", response_model=List[schemas.PostDB], status_code=HTTP_200_OK)
 async def get_posts(label: str = None, limit: int = None):
     """Get list of of AITA posts.
-    :param label: filter by AITA label
-    :param n: limit the number of posts returned
+
+    label (str): filter by AITA label
+    limit (str): limit the number of posts returned
     """
     posts = await models.Post.objects.all()
     if not posts:
-        raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail="No posts found")
-    n_posts = len(posts)
+        raise HTTPException(HTTP_404_NOT_FOUND, "No posts found")
+
     if label:
         posts = [post for post in posts if post.label == label]
-    n_samples = limit if limit and limit < n_posts and limit > 0 else n_posts
+    if limit:
+        n_posts = len(posts)
+        n_samples = limit if limit < n_posts else n_posts
+
     return random.sample(posts, n_samples)
 
 
 @router.post("/", response_model=schemas.PostDB, status_code=HTTP_201_CREATED)
 async def add_post(payload: schemas.PostCreate):
-    """Add AITA post to database.
-    :param payload: id, label, text, title
-    """
+    """Add AITA post to database."""
     try:
         await models.Post.objects.create(**payload.dict())
         return payload
-    except UniqueViolationError:
-        raise HTTPException(status_code=HTTP_400_BAD_REQUEST, detail="Post exists")
+    except UniqueViolationError as err:
+        raise HTTPException(HTTP_400_BAD_REQUEST, "Post exists") from err
 
 
-@router.get("/{id}/", response_model=schemas.PostDB, status_code=HTTP_200_OK)
-async def get_post(id: str):
-    """Retrieve AITA post by id.
-    :param id: id assigned to AITA post by reddit
-    """
+@router.get("/{post_id}/", response_model=schemas.PostDB, status_code=HTTP_200_OK)
+async def get_post(post_id: str):
+    """Retrieve AITA post by id."""
     try:
-        return await models.Post.objects.get(id=id)
-    except NoMatch:
-        raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail="Post not found")
+        return await models.Post.objects.get(id=post_id)
+    except NoMatch as err:
+        raise HTTPException(HTTP_404_NOT_FOUND, "Post not found") from err
 
 
-@router.put("/{id}/", response_model=schemas.PostDB, status_code=HTTP_200_OK)
-async def update_post(id: str, payload: schemas.PostUpdate):
-    """Update attributes of AITA post.
-    :param id: id assigned to AITA post by reddit
-    :param payload:
-    """
-    post = await get_post(id)
+@router.put("/{post_id}/", response_model=schemas.PostDB, status_code=HTTP_200_OK)
+async def update_post(post_id: str, payload: schemas.PostUpdate):
+    """Update attributes of AITA post."""
+    post = await get_post(post_id)
     updates: Dict[str, Any] = {k: v for k, v in payload.dict().items() if v is not None}
     await post.update(**updates)
-    return post
+    return await get_post(post_id)
 
 
-@router.delete("/{id}/", response_model=schemas.PostDB, status_code=HTTP_200_OK)
-async def remove_post(id: str):
-    """Remove AITA posts by id.
-    :param id: id assigned to AITA post by reddit
-    """
-    post = await get_post(id)
+@router.delete("/{post_id}/", response_model=schemas.PostDB, status_code=HTTP_200_OK)
+async def remove_post(post_id: str):
+    """Remove AITA posts by id."""
+    post = await get_post(post_id)
     await post.delete()
     return post
