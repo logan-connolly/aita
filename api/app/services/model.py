@@ -17,6 +17,7 @@ class AITAClassifier:
     def _load_model(self):
         def model(tokens):
             return "YTA" if len(tokens) > 5 else "NTA"
+
         return model
 
     def _pre_process(self, payload: ModelPayload):
