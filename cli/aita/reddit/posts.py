@@ -1,9 +1,7 @@
 import json
-
 from typing import Dict
 
 import requests
-
 from praw import Reddit
 from praw.models import Submission
 from praw.models.listing.generator import ListingGenerator

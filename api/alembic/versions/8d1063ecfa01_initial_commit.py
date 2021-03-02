@@ -4,9 +4,9 @@ Revision ID: 8d1063ecfa01
 Create Date: 2020-10-26 18:47:04.617473
 
 """
-from alembic import op
 import sqlalchemy as sa
 
+from alembic import op
 
 # revision identifiers, used by Alembic.
 revision = "8d1063ecfa01"

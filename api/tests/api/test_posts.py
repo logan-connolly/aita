@@ -1,7 +1,6 @@
-import pytest
-
 from json import dumps
 
+import pytest
 
 post = dict(id="xkl123", title="AITA?", label="NTA", text="Once upon a time")
 

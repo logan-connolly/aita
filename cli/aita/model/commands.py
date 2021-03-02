@@ -2,7 +2,6 @@ import typer
 
 from ..api.posts import ApiPosts
 
-
 app = typer.Typer()
 
 

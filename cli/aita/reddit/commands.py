@@ -6,7 +6,6 @@ from tqdm import tqdm
 from .posts import RedditPosts
 from .style import styled_add
 
-
 app = typer.Typer()
 
 

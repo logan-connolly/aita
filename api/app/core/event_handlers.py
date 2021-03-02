@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from loguru import logger
 
-from app.db.database import database
 from app.core.config import settings
+from app.db.database import database
 from app.services.model import AITAClassifier
 
 

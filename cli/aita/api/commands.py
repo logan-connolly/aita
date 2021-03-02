@@ -1,9 +1,8 @@
 import typer
 
+from ..style import whitespace
 from .posts import ApiPosts
 from .style import styled_count
-from ..style import whitespace
-
 
 app = typer.Typer()
 
