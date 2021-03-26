@@ -32,7 +32,7 @@ class Settings(BaseSettings):
 
     MODEL_PATH: str = "example/path"
 
-    URI: str = f"postgres://{pg.user}:{pg.password}@{pg.host}/{pg.db}"
+    URI: str = f"postgresql://{pg.user}:{pg.password}@{pg.host}/{pg.db}"
 
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost",
