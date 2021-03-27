@@ -1,24 +1,21 @@
-FROM tiangolo/uvicorn-gunicorn:python3.8-slim
+FROM python:3.8-slim AS builder
 
-ARG POETRY="https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py"
-ARG DEPS="curl"
+ENV PATH="/opt/venv/bin:$PATH" \
+    ENV_PIP_NO_CACHE_DIR=1
+
+COPY ./requirements.txt .
+RUN set -eux \
+    && python -m venv /opt/venv \
+    && pip install -U pip setuptools wheel \
+    && pip install -r requirements.txt
+
+
+FROM tiangolo/uvicorn-gunicorn:python3.8-slim AS deploy
+
 WORKDIR /app
-COPY ./pyproject.toml ./poetry.lock* ./
-
-ENV PYTHONDONTWRITEBYTECODE=1 \
+ENV PATH="/opt/venv/bin:$PATH" \
+    PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONPATH=/app
-
-RUN set -eux \
-    && apt-get update \
-    && apt-get install --no-install-recommends -y ${DEPS} \
-    && curl -sSL $POETRY | POETRY_HOME=/opt/poetry python \
-    && cd /usr/local/bin \
-    && ln -s /opt/poetry/bin/poetry \
-    && poetry config virtualenvs.create false \
-    && cd /app \
-    && poetry install --no-root \
-    && apt-get autoremove -y \
-    && rm -rf /var/lib/apt/list/*
-
+COPY --from=builder /opt/venv /opt/venv
 COPY . .
