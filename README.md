@@ -14,6 +14,21 @@ To find out if you are the asshole, simply go to the [website](https://github.co
 
 In order to help explain why a decision was made, the input text will also be highlighted on areas that contributed to the respective decision.
 
+# Setup
+
+Define `.env` file in project root:
+
+```shell
+POSTGRES_USER=aita
+POSTGRES_PASSWORD=aita
+POSTGRES_DB=aita_db
+POSTGRES_HOST=db
+API_PORT=8020
+WEB_PORT=8021
+```
+
+Build images with `docker-compose build` and start services with `docker-compose up -d`.
+
 # Disclaimer
 
 No data that you pass to Asshole Predictor will be saved. The model will only be trained on posts from [/r/AmItheAsshole](https://www.reddit.com/r/AmItheAsshole/), which are monitored to prevent users from posting personally-identifying information like names, numbers, addresses, etc.
