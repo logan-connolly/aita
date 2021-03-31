@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from loguru import logger
 
 from app.core.config import settings
 from app.db.database import database
