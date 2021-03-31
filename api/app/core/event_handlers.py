@@ -3,12 +3,13 @@ from fastapi import FastAPI
 from app.core.config import settings
 from app.db.database import database
 from app.services.model import AITAClassifier
-from app.services.reddit import get_reddit_connection
+from app.services.reddit import get_reddit_connection, get_reddit_user
 
 
 async def start_app_handler(app: FastAPI) -> None:
     app.state.model = AITAClassifier(settings.MODEL_PATH)
-    app.state.reddit = get_reddit_connection(settings.reddit)
+    app.state.reddit = await get_reddit_connection(settings.reddit)
+    app.state.user = await get_reddit_user(app.state.reddit)
     await database.connect()
 
 
