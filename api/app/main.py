@@ -9,7 +9,7 @@ from .core.event_handlers import start_app_handler, stop_app_handler
 def get_app() -> FastAPI:
 
     app = FastAPI(
-        title=settings.API_TITLE, openapi_url=settings.OPENAPI_URL, debug=settings.DEBUG
+        title=settings.api.title, openapi_url=settings.api.openapi, debug=settings.DEBUG
     )
 
     @app.on_event("startup")
@@ -23,13 +23,13 @@ def get_app() -> FastAPI:
     if settings.BACKEND_CORS_ORIGINS:
         app.add_middleware(
             CORSMiddleware,
-            allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
+            allow_origins=settings.BACKEND_CORS_ORIGINS,
             allow_credentials=True,
             allow_methods=["*"],
             allow_headers=["*"],
         )
 
-    app.include_router(api_router, prefix=settings.API_V1_STR)
+    app.include_router(api_router, prefix=settings.api.version)
 
     return app
 

@@ -3,7 +3,13 @@ from typing import List
 from pydantic import BaseSettings
 
 
-class PostgresSettings(BaseSettings):
+class ApiConfig(BaseSettings):
+    title: str = "AITA"
+    version: str = "/api/v1"
+    openapi: str = "/api/v1/openapi.json"
+
+
+class PostgresConfig(BaseSettings):
     user: str
     password: str
     host: str
@@ -11,6 +17,16 @@ class PostgresSettings(BaseSettings):
 
     class Config:
         env_prefix = "POSTGRES_"
+
+
+class RedditConfig(BaseSettings):
+    client_id: str
+    client_secret: str
+    password: str
+    username: str
+
+    class Config:
+        env_prefix = "REDDIT_"
 
 
 class WebSettings(BaseSettings):
@@ -21,19 +37,14 @@ class WebSettings(BaseSettings):
 
 
 class Settings(BaseSettings):
-    pg = PostgresSettings()
+    api = ApiConfig()
+    pg = PostgresConfig()
+    reddit = RedditConfig()
     web = WebSettings()
 
     DEBUG: bool = True
-
-    API_TITLE: str = "AITA"
-    API_V1_STR: str = "/api/v1"
-    OPENAPI_URL: str = f"{API_V1_STR}/openapi.json"
-
     MODEL_PATH: str = "example/path"
-
     URI: str = f"postgresql://{pg.user}:{pg.password}@{pg.host}/{pg.db}"
-
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost",
         f"http://localhost:{web.port}",
