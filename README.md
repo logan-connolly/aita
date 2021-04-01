@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/logan-connolly/aita.svg?branch=master)](https://travis-ci.com/logan-connolly/aita)
 
-Ever asked yourself, *"Am I the asshole in this situation?!"* This application helps you answer that. Based on the famous subreddit [/r/AmItheAsshole](https://www.reddit.com/r/AmItheAsshole/)
+Ever asked yourself, *"Am I the asshole here?"* This application helps you answer that. Based on the famous subreddit [/r/AmItheAsshole](https://www.reddit.com/r/AmItheAsshole/)
 
 To find out if you are the asshole, simply go to the [website](https://github.com/logan-connolly/aita), type in the argument that you are having with someone (more detail the better) and click submit. The output should be a prediction with one of the following categories:
 
