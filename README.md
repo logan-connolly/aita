@@ -16,7 +16,7 @@ In order to help explain why a decision was made, the input text will also be hi
 
 # Setup
 
-Define `.env` file in project root:
+Define `.env` file in project root ([OAuth Guide](https://asyncpraw.readthedocs.io/en/latest/getting_started/authentication.html#oauth)):
 
 ```shell
 POSTGRES_USER=aita
