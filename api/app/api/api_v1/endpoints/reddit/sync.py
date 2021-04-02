@@ -21,7 +21,7 @@ async def get_last_sync():
 
 @router.post("/", response_model=RedditSync, status_code=HTTP_201_CREATED)
 async def sync_reddit_posts(request: Request, limit: int = 10):
-    """Check whether you are connected with Reddit API."""
+    """Pull subreddit submissions from Reddit and process them accordingly."""
     subreddit = await request.app.state.reddit.subreddit("AmItheAsshole")
     saved_posts = {post.id: post.label for post in await models.Post.objects.all()}
     new_posts = 0
