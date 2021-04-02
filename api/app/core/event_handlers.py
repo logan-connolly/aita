@@ -1,9 +1,8 @@
-import debugpy
 from fastapi import FastAPI
-from loguru import logger
 
 from app.core.config import settings
 from app.db.database import database
+from app.services.debug import setup_debug_server
 from app.services.model import AITAClassifier
 from app.services.reddit import get_reddit_connection, get_reddit_user
 
@@ -11,8 +10,7 @@ from app.services.reddit import get_reddit_connection, get_reddit_user
 async def start_app_handler(app: FastAPI) -> None:
     """Services to start upon app launch"""
     if settings.DEBUG:
-        logger.info("Debugpy server starting on port 5678")
-        debugpy.listen(("0.0.0.0", 5678))
+        setup_debug_server()
 
     app.state.model = AITAClassifier(settings.MODEL_PATH)
     app.state.reddit = await get_reddit_connection(settings.reddit)
