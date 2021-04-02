@@ -12,10 +12,6 @@ repos:
         name: isort-api
         entry: isort api
         pass_filenames: false
-      - id: isort
-        name: isort-cli
-        entry: isort cli
-        pass_filenames: false
   - repo: https://github.com/psf/black
     rev: 19.3b0
     hooks:
@@ -31,8 +27,4 @@ repos:
       - id: mypy
         name: mypy-api
         entry: mypy api/app
-        pass_filenames: false
-      - id: mypy
-        name: mypy-cli
-        entry: mypy cli/aita
         pass_filenames: false
