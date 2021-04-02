@@ -1,4 +1,5 @@
-from orm import Model, String, Text
+from orm import DateTime, Model, String, Text
+from sqlalchemy.sql import func
 
 from app.db.database import database, metadata
 
@@ -12,3 +13,4 @@ class Post(Model):
     title = String(max_length=255)
     label = String(max_length=255)
     text = Text()
+    ts = DateTime(default=func.now())

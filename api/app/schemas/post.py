@@ -10,10 +10,16 @@ class LabelEnum(str, Enum):
     ESH = "ESH"
     NAH = "NAH"
     INFO = "INFO"
-    NONE = "NONE"
 
 
-# shared properties
+class PostCount(BaseModel):
+    YTA: Optional[int]
+    NTA: Optional[int]
+    ESH: Optional[int]
+    NAH: Optional[int]
+    INFO: Optional[int]
+
+
 class PostBase(BaseModel):
     id: Optional[str] = None
     title: Optional[str] = None
@@ -21,7 +27,6 @@ class PostBase(BaseModel):
     text: Optional[str] = None
 
 
-# properties to receive on item creation
 class PostCreate(PostBase):
     id: str
     title: str
@@ -29,12 +34,10 @@ class PostCreate(PostBase):
     text: str
 
 
-# properties to receive on item update
 class PostUpdate(PostBase):
     pass
 
 
-# properties shared by models stored in DB
 class PostDBBase(PostBase):
     id: str
     title: str
@@ -45,6 +48,5 @@ class PostDBBase(PostBase):
         orm_mode = True
 
 
-# properties to return to client
 class PostDB(PostDBBase):
     pass
