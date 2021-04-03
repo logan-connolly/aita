@@ -36,6 +36,10 @@ WEB_PORT=8021
 
 Build images with `docker-compose build` and start services with `docker-compose up -d`.
 
+# API Documentation
+
+Check out the API documenation at [localhost:8020/docs](localhost:8020/docs)
+
 # Disclaimer
 
 No data that you pass to Asshole Predictor will be saved. The model will only be trained on posts from [/r/AmItheAsshole](https://www.reddit.com/r/AmItheAsshole/), which are monitored to prevent users from posting personally-identifying information like names, numbers, addresses, etc.
