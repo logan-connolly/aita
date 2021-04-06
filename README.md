@@ -38,7 +38,7 @@ Build images with `docker-compose build` and start services with `docker-compose
 
 # API Documentation
 
-Check out the API documenation at [localhost:8020/docs](localhost:8020/docs)
+Check out the API documenation at [http://localhost:8020/docs](http://localhost:8020/docs)
 
 # Disclaimer
 
