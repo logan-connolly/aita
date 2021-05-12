@@ -34,8 +34,6 @@ API_PORT=8020
 WEB_PORT=8021
 ```
 
-# Start Application
-
 Start application services by running:
 
 ```shell
@@ -49,8 +47,6 @@ curl -X 'POST' 'http://localhost:8020/api/v1/reddit/sync/?limit=1000'
 ```
 
 You can see how the posts appear in the UI by visiting [localhost:8021](http://localhost:8021).
-
-In addition, you can checkout the API documentation by visiting [localhost:8020/docs](http://localhost:8020/docs).
 
 
 # API Documentation
