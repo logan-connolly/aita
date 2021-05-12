@@ -7,7 +7,7 @@ pull:
 	docker-compose pull
 
 run: pull
-	docker-compose up -d ui
+	docker-compose up -d web
 
 lint:
 	pre-commit run --all-files
