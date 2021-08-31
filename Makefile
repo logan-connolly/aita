@@ -3,6 +3,9 @@
 build:
 	docker-compose build
 
+publish: build
+	docker-compose push
+
 pull:
 	docker-compose pull
 
