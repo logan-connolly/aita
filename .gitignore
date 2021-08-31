@@ -130,3 +130,6 @@ dmypy.json
 
 # ignore vim config
 .vim/
+
+# poetry
+poetry.lock

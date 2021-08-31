@@ -15,7 +15,7 @@ charset-normalizer==2.0.4; python_full_version >= "3.6.0" and python_version >= 
 click==7.1.2; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.5.0"
 colorama==0.4.4; python_version >= "3.5" and python_full_version < "3.0.0" and sys_platform == "win32" or sys_platform == "win32" and python_version >= "3.5" and python_full_version >= "3.5.0"
 databases==0.5.0; python_version >= "3.6"
-fastapi==0.63.0; python_version >= "3.6"
+fastapi==0.65.3; python_version >= "3.6"
 greenlet==1.1.1; python_version >= "3" and python_full_version < "3.0.0" and platform_machine in "x86_64 X86_64 aarch64 AARCH64 ppc64le PPC64LE amd64 AMD64 win32 WIN32" and (python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.6.0" and python_version >= "3.6") or python_version >= "3" and platform_machine in "x86_64 X86_64 aarch64 AARCH64 ppc64le PPC64LE amd64 AMD64 win32 WIN32" and (python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.6.0" and python_version >= "3.6") and python_full_version >= "3.5.0"
 h11==0.9.0
 httptools==0.1.2; sys_platform != "win32" and sys_platform != "cygwin" and platform_python_implementation != "PyPy"
@@ -30,7 +30,7 @@ psycopg2-binary==2.9.1; python_version >= "3.6"
 pydantic==1.8.2; python_full_version >= "3.6.1" and python_version >= "3.6"
 requests==2.26.0; (python_version >= "2.7" and python_full_version < "3.0.0") or (python_full_version >= "3.6.0")
 sqlalchemy==1.4.23; python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.6.0" and python_version >= "3.6"
-starlette==0.13.6; python_version >= "3.6"
+starlette==0.14.2; python_version >= "3.6"
 typesystem==0.2.4; python_version >= "3.6"
 typing-extensions==3.10.0.2; python_full_version >= "3.6.1" and python_version >= "3.6"
 update-checker==0.18.0; python_version >= "3.6"
