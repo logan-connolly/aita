@@ -1,13 +1,13 @@
 .PHONY: build pull run lint tests clean
 
 build:
-	docker-compose build
+	docker-compose build $(service)
 
 publish: build
-	docker-compose push
+	docker-compose push $(service)
 
 pull:
-	docker-compose pull
+	docker-compose pull $(service)
 
 run: pull
 	docker-compose up -d web
