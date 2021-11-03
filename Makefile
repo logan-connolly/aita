@@ -1,6 +1,9 @@
 .PHONY: build pull run lint tests clean
 
-build:
+export_deps:
+	cd api && poetry install && poetry export --without-hashes -o requirements.txt
+
+build: export_deps
 	docker-compose build $(service)
 
 publish: build
