@@ -43,7 +43,7 @@ update-checker==0.18.0; python_version >= "3.6"
 urllib3==1.26.7; python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.6.0" and python_version < "4" and python_version >= "3.6"
 uvicorn==0.11.8
 uvloop==0.16.0; sys_platform != "win32" and sys_platform != "cygwin" and platform_python_implementation != "PyPy" and python_version >= "3.7"
-websockets==8.1; python_full_version >= "3.6.1"
+websockets==9.1; python_full_version >= "3.6.1"
 win32-setctime==1.0.3; sys_platform == "win32" and python_version >= "3.5"
 yarl==1.7.2; python_version >= "3.6"
 zipp==3.6.0; python_version < "3.9" and python_version >= "3.6"
