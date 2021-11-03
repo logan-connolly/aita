@@ -12,11 +12,9 @@ export WORKER_CLASS=${WORKER_CLASS:-"uvicorn.workers.UvicornWorker"}
 sleep 5
 echo "Running alembic migrations ..."
 alembic upgrade head
-echo "Instantiating meilisearch index ..."
-curl -X POST "http://${SEARCH_HOST}:${SEARCH_PORT}/indexes" --data '{"uid": "recipes"}'
 
 # Start app server
-if [ $DEBUG_SERVER == "True" ]; then
+if [ "${DEBUG}" = "True" ]; then
   exec uvicorn --reload --host 0.0.0.0 --port 8000 "$APP_MODULE"
 else
   exec gunicorn -k "$WORKER_CLASS" -c "$GUNICORN_CONF" "$APP_MODULE"

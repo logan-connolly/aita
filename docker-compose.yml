@@ -30,7 +30,6 @@ services:
       - REDDIT_PASSWORD=${REDDIT_PASSWORD}
       - REDDIT_USERNAME=${REDDIT_USERNAME}
       - WEB_PORT=${WEB_PORT}
-    command: /start-reload.sh
     depends_on:
       - db
 
