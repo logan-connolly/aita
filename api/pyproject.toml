@@ -17,6 +17,7 @@ asyncpraw = "^7.2.0"
 gunicorn = "^20.1.0"
 requests = "^2.26.0"
 debugpy = "^1.5.1"
+pydantic = {extras = ["dotenv"], version = "^1.8.2"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

@@ -17,6 +17,8 @@ class PostgresConfig(BaseSettings):
 
     class Config:
         env_prefix = "POSTGRES_"
+        env_file = ".env"
+        env_file_encoding = "utf-8"
 
 
 class RedditConfig(BaseSettings):
@@ -27,6 +29,8 @@ class RedditConfig(BaseSettings):
 
     class Config:
         env_prefix = "REDDIT_"
+        env_file = ".env"
+        env_file_encoding = "utf-8"
 
 
 class WebSettings(BaseSettings):
@@ -34,6 +38,8 @@ class WebSettings(BaseSettings):
 
     class Config:
         env_prefix = "WEB_"
+        env_file = ".env"
+        env_file_encoding = "utf-8"
 
 
 class Settings(BaseSettings):
