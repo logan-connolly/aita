@@ -2,16 +2,12 @@ from fastapi import FastAPI
 
 from app.core.config import settings
 from app.db.database import database
-from app.services.debug import setup_debug_server
 from app.services.model import AITAClassifier
 from app.services.reddit import get_reddit_connection, get_reddit_user
 
 
 async def start_app_handler(app: FastAPI) -> None:
     """Services to start upon app launch"""
-    if settings.DEBUG:
-        setup_debug_server()
-
     app.state.model = AITAClassifier(settings.MODEL_PATH)
     app.state.reddit = await get_reddit_connection(settings.reddit)
     app.state.user = await get_reddit_user(app.state.reddit)
