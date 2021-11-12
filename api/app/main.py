@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from .api.api_v1.routes import api_router
-from .core.config import settings
-from .core.event_handlers import start_app_handler, stop_app_handler
+from app.api.api_v1.routes import api_router
+from app.core.config import settings
+from app.core.event_handlers import start_app_handler, stop_app_handler
 
 
 def get_app() -> FastAPI:
@@ -32,6 +32,3 @@ def get_app() -> FastAPI:
     app.include_router(api_router, prefix=settings.api.version)
 
     return app
-
-
-app = get_app()

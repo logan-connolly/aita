@@ -2,9 +2,7 @@
 set -e
 
 # Export variables
-MODULE_NAME=${MODULE_NAME:-app.main}
-VARIABLE_NAME=${VARIABLE_NAME:-app}
-export APP_MODULE=${APP_MODULE:-"$MODULE_NAME:$VARIABLE_NAME"}
+export APP_MODULE=${MODULE_NAME:-app.app}
 export GUNICORN_CONF=${GUNICORN_CONF:-/gunicorn_conf.py}
 export WORKER_CLASS=${WORKER_CLASS:-"uvicorn.workers.UvicornWorker"}
 
