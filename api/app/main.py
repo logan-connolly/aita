@@ -6,7 +6,7 @@ from app.core.config import settings
 from app.core.event_handlers import start_app_handler, stop_app_handler
 
 
-def get_app() -> FastAPI:
+def create_app() -> FastAPI:
 
     app = FastAPI(
         title=settings.api.title, openapi_url=settings.api.openapi, debug=settings.DEBUG
@@ -32,3 +32,6 @@ def get_app() -> FastAPI:
     app.include_router(api_router, prefix=settings.api.version)
 
     return app
+
+
+app = create_app()

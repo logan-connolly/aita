@@ -2,8 +2,8 @@
 set -e
 
 # Export variables
-export APP_MODULE=${MODULE_NAME:-app.app}
-export GUNICORN_CONF=${GUNICORN_CONF:-/gunicorn_conf.py}
+export APP_MODULE=${MODULE_NAME:-app.main:app}
+export GUNICORN_CONF=${GUNICORN_CONF:-gunicorn_conf.py}
 export WORKER_CLASS=${WORKER_CLASS:-"uvicorn.workers.UvicornWorker"}
 
 # Prestart script
