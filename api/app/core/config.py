@@ -48,7 +48,7 @@ class Settings(BaseSettings):
     reddit = RedditConfig()
     web = WebSettings()
 
-    DEBUG: bool = True
+    DEBUG: bool = False
     MODEL_PATH: str = "example/path"
     URI: str = f"postgresql://{pg.user}:{pg.password}@{pg.host}/{pg.db}"
     BACKEND_CORS_ORIGINS: List[str] = [
