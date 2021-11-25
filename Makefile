@@ -1,28 +1,28 @@
-.PHONY: build pull run lint tests clean
+.DEFAULT_GOAL=help
 
-export_deps:
-	cd api && poetry install && poetry export --without-hashes -o requirements.txt
-
-build: export_deps
+build: clean # Build images locally
 	docker-compose build $(service)
 
-publish: build
+publish: build # Push images to docker registry
 	docker-compose push $(service)
 
-pull:
+pull: # Pull required docker images
 	docker-compose pull $(service)
 
-run: pull
+run: # Start application containers
 	docker-compose up -d web
 
-lint:
+lint: # Check and format via pre-commit
 	pre-commit run --all-files
 
-tests:
+tests: # Launch services and test
 	docker-compose pull api
 	docker-compose up -d api
 	docker-compose exec api pytest tests
 
-clean:
-	find . -type f -name "*.py[co]" -delete
-	find . -type d -name "__pycache__" -delete
+clean: # Clean up cache files
+	@find . -type f -name "*.py[co]" -delete
+	@find . -type d -name "__pycache__" -delete
+
+help: # Show this help
+	@egrep -h '\s#\s' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?# "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
