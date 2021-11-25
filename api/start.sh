@@ -13,7 +13,7 @@ alembic upgrade head
 
 # Start app server
 if [ "${DEBUG}" = "True" ]; then
-  exec uvicorn --reload --host 0.0.0.0 --port 8000 "$APP_MODULE"
+  exec uvicorn "$APP_MODULE" --host 0.0.0.0 --port 8000 --reload
 else
   exec gunicorn -k "$WORKER_CLASS" -c "$GUNICORN_CONF" "$APP_MODULE"
 fi

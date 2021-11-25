@@ -15,6 +15,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONPATH=/app \
     PATH="/opt/venv/bin:$PATH"
 
+WORKDIR /usr/src/app
 COPY . .
 EXPOSE 8000
-CMD ["/start.sh"]
+CMD ["./start.sh"]
