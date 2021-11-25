@@ -10,7 +10,7 @@ pull: # Pull required docker images
 	docker-compose pull $(service)
 
 run: # Start application containers
-	docker-compose up -d web
+	docker-compose up -d
 
 lint: # Check and format via pre-commit
 	pre-commit run --all-files

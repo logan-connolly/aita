@@ -31,7 +31,6 @@ REDDIT_PASSWORD=
 REDDIT_USERNAME=
 
 API_PORT=8020
-WEB_PORT=8021
 ```
 
 Start application services by running:
