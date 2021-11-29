@@ -22,18 +22,22 @@ async def get_last_sync():
 @router.post("/", response_model=RedditSync, status_code=HTTP_201_CREATED)
 async def sync_reddit_posts(request: Request, limit: int = 10):
     """Pull subreddit submissions from Reddit and process them accordingly."""
+
     subreddit = await request.app.state.reddit.subreddit("AmItheAsshole")
-    saved_posts = {post.id: post.label for post in await models.Post.objects.all()}
+    saved_post_ids = {post.id for post in await models.Post.objects.all()}
     new_posts = 0
 
     async for raw_post in subreddit.top(limit=limit):
         post = await extract_post_info(raw_post)
-        if post["label"] is not None:
-            if post["id"] in saved_posts:
-                stored_post = await models.Post.objects.get(id=post["id"])
-                await stored_post.update(**post)
-            else:
-                new_posts += 1
-                await models.Post.objects.create(**post)
 
-    return {"posts": len(saved_posts) + new_posts, "new": new_posts}
+        if post.label is None:
+            continue
+
+        if post.id in saved_post_ids:
+            stored_post = await models.Post.objects.get(id=post.id)
+            await stored_post.update(**post.dict())
+        else:
+            new_posts += 1
+            await models.Post.objects.create(**post.dict())
+
+    return {"posts": len(saved_post_ids) + new_posts, "new": new_posts}
