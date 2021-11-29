@@ -1,4 +1,4 @@
-from typing import Dict, Optional
+from typing import Optional
 
 from asyncpraw import Reddit
 from asyncpraw.models import Submission
@@ -29,7 +29,7 @@ async def get_reddit_user(reddit: Reddit) -> str:
         ) from err
 
 
-async def extract_post_info(post: Submission) -> Dict[str, Optional[str]]:
+async def extract_post_info(post: Submission) -> dict[str, Optional[str]]:
     """Extract information from post needed for training model"""
 
     def convert_label(flair: str) -> Optional[str]:

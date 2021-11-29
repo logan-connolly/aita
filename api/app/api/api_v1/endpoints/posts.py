@@ -1,5 +1,4 @@
 import random
-from typing import Any, Dict, List
 
 from asyncpg.exceptions import UniqueViolationError
 from fastapi import APIRouter, HTTPException
@@ -16,7 +15,7 @@ from app import models, schemas
 router = APIRouter()
 
 
-@router.get("/", response_model=List[schemas.PostDB], status_code=HTTP_200_OK)
+@router.get("/", response_model=list[schemas.PostDB], status_code=HTTP_200_OK)
 async def get_posts(label: str = None, limit: int = None):
     """Get list of of AITA posts.
 
@@ -28,6 +27,7 @@ async def get_posts(label: str = None, limit: int = None):
         raise HTTPException(HTTP_404_NOT_FOUND, "No posts found")
 
     n_posts = len(posts)
+
     if label:
         posts = [post for post in posts if post.label == label]
     if limit:
@@ -59,7 +59,7 @@ async def get_post(post_id: str):
 async def update_post(post_id: str, payload: schemas.PostUpdate):
     """Update attributes of AITA post."""
     post = await get_post(post_id)
-    updates: Dict[str, Any] = {k: v for k, v in payload.dict().items() if v is not None}
+    updates: dict[str, str] = {k: v for k, v in payload.dict().items() if v is not None}
     await post.update(**updates)
     return await get_post(post_id)
 
