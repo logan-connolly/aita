@@ -5,6 +5,7 @@ from asyncpraw.models import Submission
 from asyncprawcore.exceptions import OAuthException
 
 from app.core.config import RedditConfig, settings
+from app.schemas.post import PostBase
 
 
 async def get_reddit_connection(config: RedditConfig) -> Reddit:
@@ -29,22 +30,23 @@ async def get_reddit_user(reddit: Reddit) -> str:
         ) from err
 
 
-async def extract_post_info(post: Submission) -> dict[str, Optional[str]]:
+async def extract_post_info(post: Submission) -> PostBase:
     """Extract information from post needed for training model"""
 
     def convert_label(flair: str) -> Optional[str]:
-        flair_dict = {
+        return {
             "Asshole": "YTA",
             "Not the A-hole": "NTA",
             "Everyone Sucks": "ESH",
             "No A-holes here": "NAH",
             "Not enough info": "INFO",
-        }
-        return flair_dict.get(flair)
+        }.get(flair)
 
-    return {
-        "id": post.id,
-        "title": post.title,
-        "label": convert_label(post.link_flair_text),
-        "text": post.selftext,
-    }
+    return PostBase(
+        **{
+            "id": post.id,
+            "title": post.title,
+            "label": convert_label(post.link_flair_text),
+            "text": post.selftext,
+        }
+    )
