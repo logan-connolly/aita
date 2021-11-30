@@ -3,15 +3,18 @@ from fastapi import FastAPI
 from app.api.api_v1.routes import api_router
 from app.core.config import settings
 from app.core.middleware import add_cors_middleware
+from app.core.services.classifiers.dummy import DummyClassifier
+from app.core.services.predict import AitaPredictor
+from app.core.services.reddit import get_reddit_connection, get_reddit_user
 from app.db.database import database
-from app.services.model import AITAClassifier
-from app.services.reddit import get_reddit_connection, get_reddit_user
 
 
 async def start_app_handler(app: FastAPI) -> None:
     """Services to start upon app launch"""
 
-    app.state.model = AITAClassifier(settings.MODEL_PATH)
+    classifier = DummyClassifier()
+
+    app.state.model = AitaPredictor(classifier=classifier)
     app.state.reddit = await get_reddit_connection(settings.reddit)
     app.state.user = await get_reddit_user(app.state.reddit)
 

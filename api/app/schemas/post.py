@@ -1,15 +1,8 @@
-from enum import Enum
 from typing import Optional, Union
 
 from pydantic import BaseModel
 
-
-class LabelEnum(str, Enum):
-    YTA = "YTA"
-    NTA = "NTA"
-    ESH = "ESH"
-    NAH = "NAH"
-    INFO = "INFO"
+from app.core.constants import AitaLabel
 
 
 class PostCount(BaseModel):
@@ -23,19 +16,15 @@ class PostCount(BaseModel):
 class PostBase(BaseModel):
     reddit_id: Optional[str] = None
     title: Optional[str] = None
-    label: Optional[Union[LabelEnum, str]] = None
+    label: Optional[Union[AitaLabel, str]] = None
     text: Optional[str] = None
 
 
 class PostCreate(PostBase):
     reddit_id: str
     title: str
-    label: LabelEnum
+    label: AitaLabel
     text: str
-
-
-class PostUpdate(PostBase):
-    pass
 
 
 class PostDB(PostBase):

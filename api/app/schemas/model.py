@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from .post import LabelEnum
+from app.core.constants import AitaLabel
 
 
 class ModelPayload(BaseModel):
@@ -8,4 +8,4 @@ class ModelPayload(BaseModel):
 
 
 class ModelPrediction(BaseModel):
-    prediction: LabelEnum
+    prediction: AitaLabel
