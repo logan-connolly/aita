@@ -23,6 +23,7 @@ async def get_posts(label: str = None, limit: int = None):
     limit (str): limit the number of posts returned
     """
     posts = await models.Post.objects.all()
+
     if not posts:
         raise HTTPException(HTTP_404_NOT_FOUND, "No posts found")
 

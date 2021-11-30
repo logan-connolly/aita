@@ -44,7 +44,7 @@ async def extract_post_info(post: Submission) -> PostBase:
 
     return PostBase(
         **{
-            "id": post.id,
+            "reddit_id": post.id,
             "title": post.title,
             "label": convert_label(post.link_flair_text),
             "text": post.selftext,

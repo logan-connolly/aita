@@ -18,7 +18,8 @@ depends_on = None
 def upgrade():
     op.create_table(
         "posts",
-        sa.Column("id", sa.VARCHAR(length=6), nullable=False),
+        sa.Column("id", sa.INTEGER(), autoincrement=True, nullable=False),
+        sa.Column("reddit_id", sa.VARCHAR(length=6), nullable=False),
         sa.Column("title", sa.VARCHAR(length=255), autoincrement=False, nullable=False),
         sa.Column("label", sa.VARCHAR(length=255), autoincrement=False, nullable=False),
         sa.Column("text", sa.TEXT(), autoincrement=False, nullable=False),

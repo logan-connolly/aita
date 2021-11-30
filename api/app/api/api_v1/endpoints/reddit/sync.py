@@ -15,6 +15,7 @@ async def get_last_sync():
     posts = await models.Post.objects.all()
     if not posts:
         raise HTTPException(HTTP_404_NOT_FOUND, "No posts found in DB")
+
     latest_post = max(post.ts for post in posts)
     return {"posts": len(posts), "last_sync": latest_post.strftime("%Y-%m-%d %H:%M")}
 
@@ -24,7 +25,7 @@ async def sync_reddit_posts(request: Request, limit: int = 10):
     """Pull subreddit submissions from Reddit and process them accordingly."""
 
     subreddit = await request.app.state.reddit.subreddit("AmItheAsshole")
-    saved_post_ids = {post.id for post in await models.Post.objects.all()}
+    saved_post_ids = {post.reddit_id for post in await models.Post.objects.all()}
     new_posts = 0
 
     async for raw_post in subreddit.top(limit=limit):
@@ -33,8 +34,8 @@ async def sync_reddit_posts(request: Request, limit: int = 10):
         if post.label is None:
             continue
 
-        if post.id in saved_post_ids:
-            stored_post = await models.Post.objects.get(id=post.id)
+        if post.reddit_id in saved_post_ids:
+            stored_post = await models.Post.objects.get(reddit_id=post.reddit_id)
             await stored_post.update(**post.dict())
         else:
             new_posts += 1
