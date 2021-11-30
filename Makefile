@@ -16,7 +16,6 @@ lint: # Check and format via pre-commit
 	pre-commit run --all-files
 
 tests: # Launch services and test
-	docker-compose pull api
 	docker-compose up -d api
 	docker-compose exec api pytest tests
 
