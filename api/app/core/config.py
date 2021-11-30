@@ -33,7 +33,7 @@ class RedditConfig(BaseSettings):
 
 
 class WebSettings(BaseSettings):
-    port: int
+    port: int = 8080
 
     class Config:
         env_prefix = "WEB_"
@@ -59,8 +59,3 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
-api_settings = {
-    "title": settings.api.title,
-    "openapi_url": settings.api.openapi,
-    "debug": settings.api.debug,
-}

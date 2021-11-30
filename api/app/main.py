@@ -1,12 +1,16 @@
 from fastapi import FastAPI
 
-from app.core.config import api_settings
+from app.core.config import settings
 from app.core.event_handlers import start_app_handler, stop_app_handler
 
 
 def create_app() -> FastAPI:
 
-    app = FastAPI(**api_settings)
+    app = FastAPI(
+        title=settings.api.title,
+        openapi_url=settings.api.openapi,
+        debug=settings.api.debug,
+    )
 
     @app.on_event("startup")
     async def startup():
