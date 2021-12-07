@@ -42,14 +42,13 @@ async def get_posts(label: str = None, limit: int = None):
 async def add_post(payload: PostCreate):
     """Add AITA post to database."""
     try:
-        await Post.objects.create(**payload.dict())
-        return payload
+        return await Post.objects.create(**payload.dict())
     except UniqueViolationError as err:
         raise HTTPException(HTTP_400_BAD_REQUEST, "Post exists") from err
 
 
 @router.get("/{post_id}/", response_model=PostDB, status_code=HTTP_200_OK)
-async def get_post(post_id: str):
+async def get_post(post_id: int):
     """Retrieve AITA post by id."""
     try:
         return await Post.objects.get(id=post_id)
@@ -58,7 +57,7 @@ async def get_post(post_id: str):
 
 
 @router.put("/{post_id}/", response_model=PostDB, status_code=HTTP_200_OK)
-async def update_post(post_id: str, payload: PostBase):
+async def update_post(post_id: int, payload: PostBase):
     """Update attributes of AITA post."""
     post = await get_post(post_id)
     updates: dict[str, str] = {k: v for k, v in payload.dict().items() if v is not None}
@@ -67,7 +66,7 @@ async def update_post(post_id: str, payload: PostBase):
 
 
 @router.delete("/{post_id}/", response_model=PostDB, status_code=HTTP_200_OK)
-async def remove_post(post_id: str):
+async def remove_post(post_id: int):
     """Remove AITA posts by id."""
     post = await get_post(post_id)
     await post.delete()
