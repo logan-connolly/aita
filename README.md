@@ -19,18 +19,11 @@ In order to help explain why a decision was made, the input text will also be hi
 Define `.env` file in project root ([OAuth Guide](https://asyncpraw.readthedocs.io/en/latest/getting_started/authentication.html#oauth)):
 
 ```shell
-POSTGRES_USER=aita
-POSTGRES_PASSWORD=aita
-POSTGRES_DB=aita_db
-POSTGRES_HOST=db
-
 # need to generate your own OAuth credentials
 REDDIT_CLIENT_ID=
 REDDIT_CLIENT_SECRET=
 REDDIT_PASSWORD=
 REDDIT_USERNAME=
-
-API_PORT=8020
 ```
 
 Start application services by running:
