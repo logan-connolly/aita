@@ -20,7 +20,7 @@ services:
       - ${API_PORT}:8000
       - 5678:5678
     volumes:
-      - ./api:/app
+      - ./api:/usr/src/app
     environment:
       - DEBUG=${DEBUG}
       - POSTGRES_USER=${POSTGRES_USER}
