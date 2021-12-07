@@ -26,6 +26,5 @@ async def start_app_handler(app: FastAPI) -> None:
 
 async def stop_app_handler(app: FastAPI) -> None:
     """Services to stop upon app shutdown"""
-    app.state.model = None
-    app.state.reddit = None
+    await app.state.reddit.close()
     await database.disconnect()
