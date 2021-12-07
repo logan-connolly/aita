@@ -1,0 +1,23 @@
+name: tests
+on: push
+env:
+  REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+  REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+  REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME }}
+  REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - uses: pre-commit/action@v2.0.3
+      - name: Fetch images
+        run: docker-compose pull api
+      - name: Start Containers
+        run: docker-compose up -d api
+      - name: Sleep 15s while DB migrations run
+        run: sleep 15
+      - name: Run tests
+        run: docker-compose exec -T api pytest tests

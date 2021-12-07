@@ -1,6 +1,6 @@
 #  Am I the Asshole? (aita)
 
-[![Build Status](https://travis-ci.com/logan-connolly/aita.svg?branch=master)](https://travis-ci.com/logan-connolly/aita)
+[![tests](https://github.com/logan-connolly/aita/actions/workflows/test.yaml/badge.svg)](https://github.com/logan-connolly/aita/actions)
 
 Ever asked yourself, *"Am I the asshole here?"* This application helps you answer that. Based on the famous subreddit [/r/AmItheAsshole](https://www.reddit.com/r/AmItheAsshole/)
 
