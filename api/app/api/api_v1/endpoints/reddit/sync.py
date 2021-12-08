@@ -1,10 +1,13 @@
+from typing import Optional
+
 from fastapi import APIRouter, HTTPException
+from orm.exceptions import NoMatch
 from starlette.requests import Request
 from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_404_NOT_FOUND
 
 from app.core.services.reddit import extract_post_info
 from app.models.post import Post
-from app.schemas.reddit import RedditLastSync, RedditSync
+from app.schemas.reddit import RedditLastSync, SortFilter
 
 router = APIRouter()
 
@@ -20,25 +23,24 @@ async def get_last_sync():
     return {"posts": len(posts), "last_sync": latest_post.strftime("%Y-%m-%d %H:%M")}
 
 
-@router.post("/", response_model=RedditSync, status_code=HTTP_201_CREATED)
-async def sync_reddit_posts(request: Request, limit: int = 10):
+@router.post("/", response_model=RedditLastSync, status_code=HTTP_201_CREATED)
+async def sync_reddit_posts(
+    request: Request, filter: SortFilter = SortFilter.hot, limit: Optional[int] = None
+):
     """Pull subreddit submissions from Reddit and process them accordingly."""
 
     subreddit = await request.app.state.reddit.subreddit("AmItheAsshole")
-    saved_post_ids = {post.reddit_id for post in await Post.objects.all()}
-    new_posts = 0
 
-    async for raw_post in subreddit.top(limit=limit):
+    async for raw_post in getattr(subreddit, filter)(limit=limit):
         post = await extract_post_info(raw_post)
 
         if post.label is None:
             continue
 
-        if post.reddit_id in saved_post_ids:
+        try:
             stored_post = await Post.objects.get(reddit_id=post.reddit_id)
             await stored_post.update(**post.dict())
-        else:
-            new_posts += 1
+        except NoMatch:
             await Post.objects.create(**post.dict())
 
-    return {"posts": len(saved_post_ids) + new_posts, "new": new_posts}
+    return await get_last_sync()
