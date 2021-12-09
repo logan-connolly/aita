@@ -137,3 +137,4 @@ poetry.lock
 # nlp data
 /nlp/data/raw/*.json
 /nlp/data/processed/*.spacy
+/nlp/data/output/*
