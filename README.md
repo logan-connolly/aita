@@ -1,22 +1,27 @@
-#  Am I the Asshole? (aita)
+## 👀 Am I the Asshole? (aita)
 
 [![tests](https://github.com/logan-connolly/aita/actions/workflows/test.yaml/badge.svg)](https://github.com/logan-connolly/aita/actions)
 
-Ever asked yourself, *"Am I the asshole here?"* This application helps you answer that. Based on the famous subreddit [/r/AmItheAsshole](https://www.reddit.com/r/AmItheAsshole/)
+## 📦 Overview
 
-To find out if you are the asshole, simply go to the [website](https://github.com/logan-connolly/aita), type in the argument that you are having with someone (more detail the better) and click submit. The output should be a prediction with one of the following categories:
+Ever asked yourself, *"Am I the asshole here?"* This application helps you answer that. Based on the famous subreddit [/r/AmItheAsshole](https://www.reddit.com/r/AmItheAsshole/), the goal of the app is to take a story yours and classify whether:
 
 - **YTA**: You're the Asshole
 - **NTA**: Not the Asshole
 - **ESH**: Everyone Sucks here
 - **NAH**: No Assholes here
-- **INFO**: Not Enough Info
+- **INFO**: Not Enough Information
 
-In order to help explain why a decision was made, the input text will also be highlighted on areas that contributed to the respective decision.
+## 🛺 Roadmap
 
-# Setup
+- Develop API that fetches AITA posts from reddit ✔️
+- Create v1 text categorizer that predicts YTA/NTA 🚧
+- Develop v1 frontend that accepts a story and predict category 🚧
+- Add explainable AI that highlights why category was selected 🚧
 
-Define `.env` file in project root ([OAuth Guide](https://asyncpraw.readthedocs.io/en/latest/getting_started/authentication.html#oauth)):
+## 💻 Development
+
+Define `.env` file in project root and supply reddit credential. Here is the official [OAuth Guide](https://asyncpraw.readthedocs.io/en/latest/getting_started/authentication.html#oauth) from `asyncpraw`, the library used for fetching posts from reddit:
 
 ```shell
 # need to generate your own OAuth credentials
@@ -25,26 +30,8 @@ REDDIT_CLIENT_SECRET=
 REDDIT_PASSWORD=
 REDDIT_USERNAME=
 ```
+Common commands are detailed in the projects Makefiles.
 
-Start application services by running:
+## ‼️ Disclaimer
 
-```shell
-make run
-```
-
-Load up to 1000 reddit posts into app with:
-
-```shell
-curl -X 'POST' 'http://localhost:8020/api/v1/reddit/sync/?limit=1000'
-```
-
-You can see how the posts appear in the UI by visiting [localhost:8021](http://localhost:8021).
-
-
-# API Documentation
-
-Check out the API documenation at [http://localhost:8020/docs](http://localhost:8020/docs)
-
-# Disclaimer
-
-No data that you pass to Asshole Predictor will be saved. The model will only be trained on posts from [/r/AmItheAsshole](https://www.reddit.com/r/AmItheAsshole/), which are monitored to prevent users from posting personally-identifying information like names, numbers, addresses, etc.
+No data that you pass to Asshole Predictor will be saved. The model will only be trained on posts from [/r/AmItheAsshole](https://www.reddit.com/r/AmItheAsshole/), which are monitored to prevent users from posting personally-identifying information like names, numbers, addresses, etc. Also, any model that is generated from this data is **highly biased** so don't take the response seriously.
