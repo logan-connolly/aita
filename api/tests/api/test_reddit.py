@@ -11,7 +11,7 @@ def test_get_reddit_info(client):
 
 def test_trigger_reddit_sync(client):
     """Test that post sync is instantiated"""
-    resp = client.post(f"{settings.api.version}/reddit/sync/?limit=10")
+    resp = client.post(f"{settings.api.version}/reddit/sync/?filter=top&limit=50")
     assert resp.status_code == HTTP_201_CREATED
 
 
