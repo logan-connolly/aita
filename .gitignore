@@ -133,3 +133,6 @@ dmypy.json
 
 # poetry
 poetry.lock
+
+# model building
+/nlp/data
