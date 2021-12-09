@@ -7,6 +7,7 @@ export GUNICORN_CONF=${GUNICORN_CONF:-gunicorn_conf.py}
 export WORKER_CLASS=${WORKER_CLASS:-"uvicorn.workers.UvicornWorker"}
 
 # Prestart script
+# TODO: see if there is a better way of doing this
 sleep 5
 echo "Running alembic migrations ..."
 alembic upgrade head
