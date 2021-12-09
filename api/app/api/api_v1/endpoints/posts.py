@@ -26,6 +26,7 @@ async def get_posts(label: str = None, limit: int = None):
     posts = await Post.objects.all()
 
     if not posts:
+        # TODO: empty lists are valid for 200
         raise HTTPException(HTTP_404_NOT_FOUND, "No posts found")
 
     n_posts = len(posts)

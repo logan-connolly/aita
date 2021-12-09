@@ -7,6 +7,9 @@ from app.core.config import settings
 POST = dict(reddit_id="xkl123", title="AITA?", label="NTA", text="Once upon a time")
 POST_ID = None
 
+# TODO: don't make fixtures mutability - should work asyncronously as well
+# TODO: look again for wrappers/solutions for creating DB sandbox
+
 
 def test_add_post(client):
     """Test that post is added to DB"""
