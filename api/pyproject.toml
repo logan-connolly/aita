@@ -17,6 +17,7 @@ asyncpraw = "^7.5.0"
 gunicorn = "^20.1.0"
 pydantic = {extras = ["dotenv"], version = "^1.8.2"}
 spacy = "^3.2.0"
+fastapi-pagination = "^0.9.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
