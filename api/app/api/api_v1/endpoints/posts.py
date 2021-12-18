@@ -1,7 +1,6 @@
-import random
-
 from asyncpg.exceptions import UniqueViolationError
 from fastapi import APIRouter, HTTPException
+from fastapi_pagination import Page, paginate
 from orm.exceptions import NoMatch
 from starlette.status import (
     HTTP_200_OK,
@@ -16,27 +15,11 @@ from app.schemas.post import PostBase, PostCreate, PostDB
 router = APIRouter()
 
 
-@router.get("/", response_model=list[PostDB], status_code=HTTP_200_OK)
-async def get_posts(label: str = None, limit: int = None):
-    """Get list of of AITA posts.
-
-    label (str): filter by AITA label
-    limit (str): limit the number of posts returned
-    """
+@router.get("/", response_model=Page[PostDB], status_code=HTTP_200_OK)
+async def get_posts():
+    """Get list of of AITA posts."""
     posts = await Post.objects.all()
-
-    if not posts:
-        # TODO: empty lists are valid for 200
-        raise HTTPException(HTTP_404_NOT_FOUND, "No posts found")
-
-    n_posts = len(posts)
-
-    if label:
-        posts = [post for post in posts if post.label == label]
-    if limit:
-        n_posts = limit if limit < n_posts else n_posts
-
-    return random.sample(posts, n_posts)
+    return paginate(posts)
 
 
 @router.post("/", response_model=PostDB, status_code=HTTP_201_CREATED)

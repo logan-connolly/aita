@@ -32,7 +32,7 @@ def test_get_posts(client):
     """Test that a list of posts can be retrieved from DB"""
     resp = client.get(f"{settings.api.version}/posts/")
     assert resp.status_code == HTTP_200_OK
-    assert any(POST == post for post in resp.json())
+    assert resp.json()["total"] >= 1
 
 
 def test_update_post(client):
