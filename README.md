@@ -10,7 +10,6 @@ Ever asked yourself, *"Am I the asshole here?"* This application helps you answe
 - **NTA**: Not the Asshole
 - **ESH**: Everyone Sucks here
 - **NAH**: No Assholes here
-- **INFO**: Not Enough Information
 
 ## 🛺 Roadmap
 

@@ -27,4 +27,4 @@ class PostCount(BaseModel):
     NTA: Optional[int]
     ESH: Optional[int]
     NAH: Optional[int]
-    INFO: Optional[int]
+    NAN: Optional[int]
