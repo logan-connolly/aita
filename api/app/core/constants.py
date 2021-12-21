@@ -12,5 +12,4 @@ class AitaLabel(str, Enum):
     NTA = "NTA"
     ESH = "ESH"
     NAH = "NAH"
-    INFO = "INFO"
-    NAN = "MISSING"
+    NAN = "NAN"

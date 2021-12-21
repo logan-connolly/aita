@@ -46,7 +46,7 @@ async def extract_post_info(post: Submission) -> PostSchema:
     return PostSchema(
         **{
             "reddit_id": post.id,
-            "title": post.title,
+            "title": post.title[:255],
             "label": convert_label(post.link_flair_text),
             "text": post.selftext,
         }
