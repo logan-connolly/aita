@@ -20,3 +20,11 @@ class RedditInfo(BaseModel):
 class RedditLastSync(BaseModel):
     posts: int
     last_sync: str
+
+
+class PostCount(BaseModel):
+    YTA: Optional[int]
+    NTA: Optional[int]
+    ESH: Optional[int]
+    NAH: Optional[int]
+    INFO: Optional[int]

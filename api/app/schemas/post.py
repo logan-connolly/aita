@@ -1,16 +1,6 @@
-from typing import Optional
-
 from pydantic import BaseModel
 
 from app.core.constants import AitaLabel
-
-
-class PostCount(BaseModel):
-    YTA: Optional[int]
-    NTA: Optional[int]
-    ESH: Optional[int]
-    NAH: Optional[int]
-    INFO: Optional[int]
 
 
 class PostSchema(BaseModel):
