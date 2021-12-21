@@ -38,7 +38,7 @@ def test_get_posts(client):
 def test_update_post(client):
     """Test that dummy post is properly updated"""
     POST["label"] = "YTA"
-    payload = dumps(dict(label="YTA"))
+    payload = dumps(POST)
     resp = client.put(f"{settings.api.version}/posts/{POST_ID}/", data=payload)
     assert resp.status_code == HTTP_200_OK
     assert resp.json() == POST

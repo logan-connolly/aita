@@ -1,4 +1,4 @@
-from typing import Optional, Union
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -13,21 +13,14 @@ class PostCount(BaseModel):
     INFO: Optional[int]
 
 
-class PostBase(BaseModel):
-    reddit_id: Optional[str] = None
-    title: Optional[str] = None
-    label: Optional[Union[AitaLabel, str]] = None
-    text: Optional[str] = None
-
-
-class PostCreate(PostBase):
+class PostSchema(BaseModel):
     reddit_id: str
     title: str
     label: AitaLabel
     text: str
 
 
-class PostDB(PostBase):
+class PostDB(BaseModel):
     id: int
     reddit_id: str
     title: str
