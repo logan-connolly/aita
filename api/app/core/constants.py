@@ -1,5 +1,7 @@
 from enum import Enum
 
+AITA_SUBREDDIT_NAME = "AmItheAsshole"
+
 
 class AitaLabel(str, Enum):
     """Available labels from Reddit /r/AmITheAsshole"""
@@ -11,3 +13,4 @@ class AitaLabel(str, Enum):
     ESH = "ESH"
     NAH = "NAH"
     INFO = "INFO"
+    NAN = "MISSING"

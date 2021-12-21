@@ -5,6 +5,7 @@ from orm.exceptions import NoMatch
 from starlette.requests import Request
 from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_404_NOT_FOUND
 
+from app.core.constants import AITA_SUBREDDIT_NAME
 from app.core.services.reddit import extract_post_info
 from app.models.post import Post
 from app.schemas.reddit import RedditLastSync, SortFilter
@@ -29,14 +30,10 @@ async def sync_reddit_posts(
 ):
     """Pull subreddit submissions from Reddit and process them accordingly."""
 
-    subreddit = await request.app.state.reddit.subreddit("AmItheAsshole")
+    subreddit = await request.app.state.reddit.subreddit(AITA_SUBREDDIT_NAME)
 
     async for raw_post in getattr(subreddit, filter)(limit=limit):
         post = await extract_post_info(raw_post)
-
-        if post.label is None:
-            continue
-
         try:
             stored_post = await Post.objects.get(reddit_id=post.reddit_id)
             await stored_post.update(**post.dict())

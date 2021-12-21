@@ -10,7 +10,7 @@ from starlette.status import (
 )
 
 from app.models.post import Post
-from app.schemas.post import PostBase, PostCreate, PostDB
+from app.schemas.post import PostDB, PostSchema
 
 router = APIRouter()
 
@@ -23,7 +23,7 @@ async def get_posts():
 
 
 @router.post("/", response_model=PostDB, status_code=HTTP_201_CREATED)
-async def add_post(payload: PostCreate):
+async def add_post(payload: PostSchema):
     """Add AITA post to database."""
     try:
         return await Post.objects.create(**payload.dict())
@@ -41,11 +41,10 @@ async def get_post(post_id: int):
 
 
 @router.put("/{post_id}/", response_model=PostDB, status_code=HTTP_200_OK)
-async def update_post(post_id: int, payload: PostBase):
+async def update_post(post_id: int, payload: PostSchema):
     """Update attributes of AITA post."""
     post = await get_post(post_id)
-    updates: dict[str, str] = {k: v for k, v in payload.dict().items() if v is not None}
-    await post.update(**updates)
+    await post.update(**payload.dict())
     return await get_post(post_id)
 
 
