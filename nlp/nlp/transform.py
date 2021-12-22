@@ -1,4 +1,7 @@
+from spacy.tokens import Doc, DocBin
+
 from nlp.io import RawPost
+from nlp.tokenizer import nlp
 
 TextLabel = tuple[str, str]
 
@@ -14,3 +17,22 @@ def parse_post(post: RawPost) -> TextLabel:
 def parse_posts(posts: list[RawPost]) -> list[TextLabel]:
     """Parse raw posts into text/label pairs (input for spacy NLP train pipeline)"""
     return [parse_post(post) for post in posts]
+
+
+def make_docs(posts: list[TextLabel]) -> list[Doc]:
+    """Make documents that spacy can use for training"""
+    docs = []
+    for doc, label in nlp.pipe(texts=posts, as_tuples=True):
+        if label == "YTA":
+            doc.cats["positive"] = 1
+            doc.cats["negative"] = 0
+        else:
+            doc.cats["positive"] = 0
+            doc.cats["negative"] = 1
+        docs.append(doc)
+    return docs
+
+
+def convert_to_doc_binary(docs: list[Doc]) -> DocBin:
+    """Take list of docs and convert to binary for storage"""
+    return DocBin(docs=docs)
