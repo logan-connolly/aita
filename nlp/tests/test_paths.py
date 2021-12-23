@@ -20,3 +20,10 @@ def test_get_raw_data_dir():
     data_dir = paths.get_raw_data_dir()
     assert data_dir.name == "raw"
     assert data_dir.parent.name == "data"
+
+
+def test_get_processed_data_dir():
+    """Test that we can access raw data directory"""
+    data_dir = paths.get_processed_data_dir()
+    assert data_dir.name == "processed"
+    assert data_dir.parent.name == "data"

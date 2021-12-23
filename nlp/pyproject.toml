@@ -11,7 +11,35 @@ spacy = "^3.2.1"
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
 freezegun = "^1.1.0"
+coverage = {extras = ["toml"], version = "^6.2"}
+mypy = "^0.930"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+target-version = ['py38']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "aoc"
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+
+[tool.coverage.run]
+source = ["nlp/"]
+
+[tool.coverage.report]
+skip_covered = true
+show_missing = true
+ignore_errors = true
+fail_under = 100
+exclude_lines = ['def __repr__', 'class .*\bProtocol\):']

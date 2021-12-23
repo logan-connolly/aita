@@ -15,7 +15,14 @@ def sample_posts():
             "label": "NTA",
             "text": "sample text",
             "id": 202,
-        }
+        },
+        {
+            "reddit_id": "hc6wd6",
+            "title": "AITA for cheating on my homework",
+            "label": "YTA",
+            "text": "sample text",
+            "id": 203,
+        },
     ]
 
 
