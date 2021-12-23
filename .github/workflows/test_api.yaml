@@ -1,4 +1,4 @@
-name: tests
+name: api tests
 on: push
 env:
   REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
