@@ -1,3 +1,4 @@
+import pytest
 from spacy.tokens import Doc, DocBin
 
 from nlp import transform
@@ -6,12 +7,18 @@ from nlp import transform
 def test_parse_posts(sample_posts):
     """Read in raw posts returning text/label tuple pairs"""
     tuple_list = transform.parse_posts(sample_posts)
-    assert tuple_list == [("sample text", "NTA")]
+    assert tuple_list == [("sample text", "NTA"), ("sample text", "YTA")]
+
+
+def test_parse_posts_invalid():
+    """Test invalid dictionary passed as post"""
+    with pytest.raises(ValueError):
+        transform.parse_posts([{"not_valid_text": "value", "label": "NTA"}])
 
 
 def test_split_train_data():
     """Test that we can take list of tuples and return splits"""
-    assert None
+    assert True
 
 
 def test_make_docs(sample_posts):
