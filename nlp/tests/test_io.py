@@ -5,8 +5,9 @@ import pytest
 from nlp import io, paths, utils
 
 
-def test_write_raw_posts(sample_posts):
+def test_write_raw_posts(monkeypatch, tmp_path, sample_posts):
     """Test that we read local JSON file"""
+    monkeypatch.setattr(paths, "get_raw_data_dir", lambda: tmp_path)
     file_path = io.write_raw_posts(sample_posts)
     assert file_path.exists()
     assert json.loads(file_path.read_text()) == sample_posts
