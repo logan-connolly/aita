@@ -3,10 +3,10 @@ import random
 from dataclasses import dataclass
 from typing import Optional
 
+import spacy
 from spacy.tokens import Doc, DocBin
 
 from nlp.io import RawPost
-from nlp.tokenizer import nlp
 
 TextLabel = tuple[str, str]
 
@@ -20,9 +20,10 @@ class SplitData:
 def parse_post(post: RawPost) -> TextLabel:
     """Given a raw post extract text and label values"""
     try:
-        return str(post["text"]), str(post["label"])
+        text = f"{str(post['title'])} {str(post['text'])}"
+        return text, str(post["label"])
     except KeyError:
-        raise ValueError("Expected a post with `text` and `label` as keys")
+        raise ValueError("Expected a post with `text`, `title` and `label` as keys")
 
 
 def parse_posts(posts: list[RawPost]) -> list[TextLabel]:
@@ -31,7 +32,7 @@ def parse_posts(posts: list[RawPost]) -> list[TextLabel]:
 
 
 def filter_posts(posts: list[TextLabel], labels: Optional[str]) -> list[TextLabel]:
-    """Filter out posts based on provided labels"""
+    """Filter out posts based on comma-separated labels string"""
     if labels:
         label_set = set(labels.split(","))
         return [(text, label) for text, label in posts if label in label_set]
@@ -40,6 +41,7 @@ def filter_posts(posts: list[TextLabel], labels: Optional[str]) -> list[TextLabe
 
 def make_docs(posts: list[TextLabel]) -> list[Doc]:
     """Make documents that spacy can use for training"""
+    nlp = spacy.blank("en")
     docs = []
     for doc, label in nlp.pipe(texts=posts, as_tuples=True):
         if label == "YTA":
