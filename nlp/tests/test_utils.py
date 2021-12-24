@@ -1,9 +1,6 @@
-from freezegun import freeze_time
-
 from nlp import utils
 
 
-@freeze_time("2021-12-25")
-def test_get_date_stamp():
+def test_generate_run_id():
     """Test that date stamp is in correct format"""
-    assert utils.get_date_stamp() == "20211225"
+    assert len(utils.generate_run_id()) == 36
