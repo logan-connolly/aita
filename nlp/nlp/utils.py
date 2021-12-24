@@ -1,7 +1,6 @@
-import datetime
+import uuid
 
 
-def get_date_stamp() -> str:
-    """Get a date stamp YYYYMMDD to prepend to filenames"""
-    dt = datetime.date.today()
-    return dt.strftime("%Y%m%d")
+def generate_run_id() -> str:
+    """Generate uuid unique identifier for fetching run id information"""
+    return str(uuid.uuid4())
