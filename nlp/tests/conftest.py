@@ -32,7 +32,9 @@ def sample_posts_id(monkeypatch, tmp_path, sample_posts) -> str:
     """Take sample post fixture and write to tmp directory (mocked as data/raw)"""
     monkeypatch.setattr(paths, "get_raw_data_dir", lambda: tmp_path)
     run_id = utils.generate_run_id()
-    mock_posts_path = tmp_path / f"{run_id}_posts.json"
+    mock_posts_dir = tmp_path / run_id
+    mock_posts_dir.mkdir(parents=True, exist_ok=True)
+    mock_posts_path = mock_posts_dir / "posts.json"
     mock_posts_path.write_text(json.dumps(sample_posts))
     return run_id
 
