@@ -135,6 +135,6 @@ dmypy.json
 poetry.lock
 
 # nlp data
-/nlp/data/raw/*.json
-/nlp/data/processed/*.spacy
+/nlp/data/raw/*
+/nlp/data/processed/*
 /nlp/data/output/*
