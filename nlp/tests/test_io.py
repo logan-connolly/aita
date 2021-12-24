@@ -1,4 +1,5 @@
 import json
+import shutil
 
 import pytest
 
@@ -37,3 +38,13 @@ def test_write_valid_docs(monkeypatch, tmp_path, sample_doc_bin):
     monkeypatch.setattr(paths, "get_processed_data_dir", lambda: tmp_path)
     doc_bin_path = io.write_valid_docs(sample_doc_bin, utils.generate_run_id())
     assert doc_bin_path.exists()
+
+
+def test_generate_config(monkeypatch, tmp_path, sample_posts_id):
+    """Test that config was generated to config dir"""
+    base_config = paths.get_config_dir() / "base.cfg"
+    monkeypatch.setattr(paths, "get_config_dir", lambda: tmp_path)
+    shutil.copy(base_config, paths.get_config_dir() / "base.cfg")
+    config = io.generate_config(sample_posts_id)
+    assert config["paths"]["train"] is not None
+    assert config["paths"]["dev"] is not None

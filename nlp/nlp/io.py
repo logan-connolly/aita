@@ -3,6 +3,8 @@ from pathlib import Path
 from typing import Union
 
 from spacy.tokens import DocBin
+from spacy.cli import fill_config
+from thinc.api import Config
 
 from nlp import paths, utils
 
@@ -45,3 +47,13 @@ def write_valid_docs(doc_bin: DocBin, run_id: str) -> Path:
     """Write validation data to proper path"""
     file_path = paths.get_processed_data_dir() / run_id / "valid.spacy"
     return write_docs(doc_bin, file_path)
+
+
+def generate_config(run_id: str) -> Config:
+    """Load spacy config from disk based on run id"""
+    base_config_path = paths.get_config_dir() / "base.cfg"
+    config_path = paths.get_config_dir() / f"{run_id}.cfg"
+    _, config = fill_config(config_path, base_config_path)
+    config["paths"]["train"] = paths.get_processed_data_dir() / run_id / "train.spacy"
+    config["paths"]["dev"] = paths.get_processed_data_dir() / run_id / "valid.spacy"
+    return config
