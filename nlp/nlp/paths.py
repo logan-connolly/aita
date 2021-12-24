@@ -19,3 +19,8 @@ def get_raw_data_dir() -> Path:
 def get_processed_data_dir() -> Path:
     """Returns path object to processed data directory"""
     return get_data_dir() / "processed"
+
+
+def get_config_dir() -> Path:
+    """Returns path object to configs data directory"""
+    return get_data_dir() / "configs"
