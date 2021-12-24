@@ -14,7 +14,7 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
         cli.download(validated_args.url)
 
     if validated_args.command == "preprocess":
-        cli.preprocess(validated_args.id)
+        cli.preprocess(validated_args.id, validated_args.labels)
 
 
 if __name__ == "__main__":
