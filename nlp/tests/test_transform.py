@@ -16,9 +16,13 @@ def test_parse_posts_invalid():
         transform.parse_posts([{"not_valid_text": "value", "label": "NTA"}])
 
 
-def test_split_train_data():
+def test_split_data(sample_posts):
     """Test that we can take list of tuples and return splits"""
-    assert True
+    tuple_list = transform.parse_posts(sample_posts)
+    docs = transform.make_docs(tuple_list)
+    split_data = transform.split_data(docs, train_ratio=0.5)
+    assert len(split_data.train) == 1
+    assert len(split_data.valid) == 1
 
 
 def test_make_docs(sample_posts):
