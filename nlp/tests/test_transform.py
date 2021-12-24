@@ -7,7 +7,7 @@ from nlp import transform
 def test_parse_posts(sample_posts):
     """Read in raw posts returning text/label tuple pairs"""
     parsed_posts = transform.parse_posts(sample_posts)
-    assert parsed_posts == [("sample text", "NTA"), ("sample text", "YTA")]
+    assert parsed_posts == [("AITA sample text", "NTA"), ("AITA sample text", "YTA")]
 
 
 def test_parse_posts_invalid():

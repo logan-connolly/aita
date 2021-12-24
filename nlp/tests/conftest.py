@@ -12,14 +12,14 @@ def sample_posts() -> list[transform.RawPost]:
     return [
         {
             "reddit_id": "hc7wd7",
-            "title": "AITA for having pot cookies out in the open in my own home?",
+            "title": "AITA",
             "label": "NTA",
             "text": "sample text",
             "id": 202,
         },
         {
             "reddit_id": "hc6wd6",
-            "title": "AITA for cheating on my homework",
+            "title": "AITA",
             "label": "YTA",
             "text": "sample text",
             "id": 203,
