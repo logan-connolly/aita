@@ -2,7 +2,7 @@ import argparse
 from pathlib import Path
 from typing import Optional, Sequence
 
-from nlp import io, paths, transform
+from nlp import http, io, paths, transform
 
 
 def validate_args(args: argparse.Namespace) -> argparse.Namespace:
@@ -27,15 +27,15 @@ def parse_args(argv: Optional[Sequence[str]]) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
-def download(api_url: str) -> None:
+def download(api_url: str) -> Path:
     """Download posts from running API instance"""
-    # TODO: implement downloading data directly from api
-    print(api_url)
+    raw_posts = http.fetch_posts(api_url)
+    return io.write_raw_posts(raw_posts)
 
 
 def preprocess(run_id: str) -> Path:
     """Read in raw posts and process data to satisfy spacy train api"""
-    raw_posts = io.read_from_json_file(run_id)
+    raw_posts = io.read_raw_posts(run_id)
     parsed_posts = transform.parse_posts(raw_posts)
     docs = transform.make_docs(parsed_posts)
     split_data = transform.split_data(docs, train_ratio=0.6)

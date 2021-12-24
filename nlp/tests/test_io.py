@@ -1,18 +1,27 @@
+import json
+
 import pytest
 
 from nlp import io, paths, utils
 
 
-def test_read_from_json_file(sample_posts, sample_posts_id):
+def test_write_raw_posts(sample_posts):
     """Test that we read local JSON file"""
-    posts = io.read_from_json_file(sample_posts_id)
+    file_path = io.write_raw_posts(sample_posts)
+    assert file_path.exists()
+    assert json.loads(file_path.read_text()) == sample_posts
+
+
+def test_read_raw_posts(sample_posts, sample_posts_id):
+    """Test that we read local JSON file"""
+    posts = io.read_raw_posts(sample_posts_id)
     assert posts == sample_posts
 
 
 def test_read_from_json_file_does_not_exist(sample_posts):
     """Test that we read local JSON file"""
     with pytest.raises(AssertionError):
-        io.read_from_json_file("nonexistent_posts.json")
+        io.read_raw_posts("nonexistent_posts.json")
 
 
 def test_write_train_docs(monkeypatch, tmp_path, sample_doc_bin):
