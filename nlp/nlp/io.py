@@ -5,7 +5,6 @@ from typing import Union
 from spacy.tokens import DocBin
 
 from nlp import paths
-from nlp.utils import generate_run_id
 
 RawPost = dict[str, Union[int, str]]
 
@@ -25,15 +24,15 @@ def write_docs(doc_bin: DocBin, path: Path) -> Path:
     return path
 
 
-def write_train_docs(doc_bin: DocBin) -> Path:
+def write_train_docs(doc_bin: DocBin, run_id: str) -> Path:
     """Write train data to proper path"""
-    filename = f"{generate_run_id()}_train.spacy"
+    filename = f"{run_id}_train.spacy"
     file_path = paths.get_processed_data_dir() / filename
     return write_docs(doc_bin, file_path)
 
 
-def write_valid_docs(doc_bin: DocBin) -> Path:
+def write_valid_docs(doc_bin: DocBin, run_id: str) -> Path:
     """Write validation data to proper path"""
-    filename = f"{generate_run_id()}_valid.spacy"
+    filename = f"{run_id}_valid.spacy"
     file_path = paths.get_processed_data_dir() / filename
     return write_docs(doc_bin, file_path)
