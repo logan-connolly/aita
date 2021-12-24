@@ -1,6 +1,7 @@
 import math
 import random
 from dataclasses import dataclass
+from typing import Optional
 
 from spacy.tokens import Doc, DocBin
 
@@ -19,7 +20,7 @@ class SplitData:
 def parse_post(post: RawPost) -> TextLabel:
     """Given a raw post extract text and label values"""
     try:
-        return post["text"], post["label"]
+        return str(post["text"]), str(post["label"])
     except KeyError:
         raise ValueError("Expected a post with `text` and `label` as keys")
 
@@ -27,6 +28,14 @@ def parse_post(post: RawPost) -> TextLabel:
 def parse_posts(posts: list[RawPost]) -> list[TextLabel]:
     """Parse raw posts into text/label pairs (input for spacy NLP train pipeline)"""
     return [parse_post(post) for post in posts]
+
+
+def filter_posts(posts: list[TextLabel], labels: Optional[str]) -> list[TextLabel]:
+    """Filter out posts based on provided labels"""
+    if labels:
+        label_set = set(labels.split(","))
+        return [(text, label) for text, label in posts if label in label_set]
+    return posts
 
 
 def make_docs(posts: list[TextLabel]) -> list[Doc]:
