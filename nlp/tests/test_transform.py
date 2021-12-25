@@ -23,6 +23,13 @@ def test_filter_posts(sample_posts):
     assert all(label == "NTA" for _, label in filtered_posts)
 
 
+def test_filter_posts_no_filter(sample_posts):
+    """Test that all posts are returned if no filter provided"""
+    parsed_posts = transform.parse_posts(sample_posts)
+    filtered_posts = transform.filter_posts(parsed_posts)
+    assert len(filtered_posts) == len(parsed_posts)
+
+
 def test_split_data(sample_posts):
     """Test that we can take list of tuples and return splits"""
     parsed_posts = transform.parse_posts(sample_posts)

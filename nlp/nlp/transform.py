@@ -1,7 +1,6 @@
 import math
 import random
 from dataclasses import dataclass
-from typing import Optional
 
 import spacy
 from spacy.tokens import Doc, DocBin
@@ -31,7 +30,7 @@ def parse_posts(posts: list[RawPost]) -> list[TextLabel]:
     return [parse_post(post) for post in posts]
 
 
-def filter_posts(posts: list[TextLabel], labels: Optional[str]) -> list[TextLabel]:
+def filter_posts(posts: list[TextLabel], labels: str = "") -> list[TextLabel]:
     """Filter out posts based on comma-separated labels string"""
     if labels:
         label_set = set(labels.split(","))

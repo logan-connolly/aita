@@ -22,7 +22,7 @@ def parse_args(argv: Optional[Sequence[str]]) -> argparse.Namespace:
         "--id", dest="id", help="ID for run id that is used to fetch stored data"
     )
     parser.add_argument(
-        "--labels", dest="labels", help="Comma-separted string of labels to download"
+        "--labels", dest="labels", default="", help="Comma-separted string of labels"
     )
     parser.add_argument(
         "--url", dest="url", help="Url for fetching posts from running API instance"
@@ -36,7 +36,7 @@ def download(api_url: str) -> Path:
     return io.write_raw_posts(raw_posts)
 
 
-def preprocess(run_id: str, labels: Optional[str]) -> Path:
+def preprocess(run_id: str, labels: str) -> Path:
     """Read in raw posts and process data to satisfy spacy train api"""
     raw_posts = io.read_raw_posts(run_id)
     parsed_posts = transform.parse_posts(raw_posts)
