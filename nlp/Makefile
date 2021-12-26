@@ -4,7 +4,7 @@ bootstrap: # Install dependencies via poetry
 	poetry install
 	poetry run python -m spacy download en_core_web_sm
 
-test: # Run unittests tests
+coverage: # Run unittests tests and calculate coverage
 	poetry run coverage run -m pytest tests
 	poetry run coverage report --skip-covered
 	poetry run mypy nlp
