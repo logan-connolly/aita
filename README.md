@@ -1,6 +1,7 @@
 ## 👀 Am I the Asshole? (aita)
 
-[![tests](https://github.com/logan-connolly/aita/actions/workflows/test.yaml/badge.svg)](https://github.com/logan-connolly/aita/actions)
+[![api](https://github.com/logan-connolly/aita/actions/workflows/test_api.yaml/badge.svg)](https://github.com/logan-connolly/aita/actions/workflows/test_api.yaml)
+[![nlp](https://github.com/logan-connolly/aita/actions/workflows/test_nlp.yaml/badge.svg)](https://github.com/logan-connolly/aita/actions/workflows/test_nlp.yaml)
 
 ## 📦 Overview
 
