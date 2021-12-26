@@ -23,7 +23,14 @@ def test_get_raw_data_dir():
 
 
 def test_get_processed_data_dir():
-    """Test that we can access raw data directory"""
+    """Test that we can access processed data directory"""
     data_dir = paths.get_processed_data_dir()
     assert data_dir.name == "processed"
+    assert data_dir.parent.name == "data"
+
+
+def test_get_model_dir():
+    """Test that we can access output (model) directory"""
+    data_dir = paths.get_model_dir()
+    assert data_dir.name == "output"
     assert data_dir.parent.name == "data"
