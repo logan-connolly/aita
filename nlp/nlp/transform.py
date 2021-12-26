@@ -9,6 +9,8 @@ from nlp.io import RawPost
 
 TextLabel = tuple[str, str]
 
+nlp = spacy.load("en_core_web_sm")
+
 
 @dataclass
 class SplitData:
@@ -40,7 +42,6 @@ def filter_posts(posts: list[TextLabel], labels: str = "") -> list[TextLabel]:
 
 def make_docs(posts: list[TextLabel]) -> list[Doc]:
     """Make documents that spacy can use for training"""
-    nlp = spacy.blank("en")
     docs = []
     for doc, label in nlp.pipe(texts=posts, as_tuples=True):
         if label == "YTA":

@@ -16,6 +16,9 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
     if validated_args.command == "preprocess":
         cli.preprocess(validated_args.id, validated_args.labels)
 
+    if validated_args.command == "train":
+        cli.train(validated_args.id)
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])

@@ -2,12 +2,12 @@ import argparse
 from pathlib import Path
 from typing import Optional, Sequence
 
-from nlp import http, io, paths, transform
+from nlp import http, io, model, paths, transform
 
 
 def validate_args(args: argparse.Namespace) -> argparse.Namespace:
     """Make sure that passed args are correct"""
-    acceptable_commands = ("download", "preprocess")
+    acceptable_commands = ("download", "preprocess", "train")
     assert args.command in acceptable_commands, f"Unsupported command: {args.command!r}"
     return args
 
@@ -46,3 +46,9 @@ def preprocess(run_id: str, labels: str) -> Path:
     io.write_train_docs(transform.convert_to_doc_binary(split_data.train), run_id)
     io.write_valid_docs(transform.convert_to_doc_binary(split_data.valid), run_id)
     return paths.get_processed_data_dir()
+
+
+def train(run_id: str) -> Path:
+    """Train spacy model with preprocessed doc bin data"""
+    config_path = io.generate_config(run_id)
+    return model.fit(run_id, config_path)

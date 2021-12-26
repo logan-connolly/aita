@@ -2,7 +2,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from nlp import cli, http, io
+from nlp import cli, http, io, paths
 
 
 @pytest.mark.parametrize("argv", [["download"], ["preprocess"], ["train"]])
@@ -26,7 +26,7 @@ def test_validate_args_invalid():
         cli.validate_args(args)
 
 
-def test_download(monkeypatch, sample_posts):
+def test_download(monkeypatch, tmp_path, sample_posts):
     """Test that posts can be downloaded from api"""
     api_url = "http://fakeaddress:8000/api/v1"
 
@@ -41,6 +41,8 @@ def test_download(monkeypatch, sample_posts):
             )
 
     monkeypatch.setattr(http.requests, "get", mock_requests)
+    monkeypatch.setattr(paths, "get_raw_data_dir", lambda: tmp_path)
+
     raw_posts_path = cli.download(api_url)
     assert raw_posts_path.exists()
 
@@ -51,3 +53,9 @@ def test_preprocess(monkeypatch, tmp_path, sample_posts_id):
     processed_dir = cli.preprocess(run_id=sample_posts_id, labels="YTA,NTA")
     assert (processed_dir / sample_posts_id / "train.spacy").exists()
     assert (processed_dir / sample_posts_id / "valid.spacy").exists()
+
+
+# def test_train(monkeypatch, tmp_path, sample_posts_id):
+#     """Test that training model works"""
+#     monkeypatch.setattr(io.paths, "get_config_dir", lambda: tmp_path)
+#     config = io.generate_config(sample_posts_id)
