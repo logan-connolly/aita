@@ -15,7 +15,7 @@ Ever asked yourself, *"Am I the asshole here?"* This application helps you answe
 ## 🛺 Roadmap
 
 - Develop API that fetches AITA posts from reddit ✔️
-- Create v1 text categorizer that predicts YTA/NTA 🚧
+- Create v1 text categorizer that predicts YTA/NTA ✔️
 - Develop v1 frontend that accepts a story and predict category 🚧
 - Add explainable AI that highlights why category was selected 🚧
 
