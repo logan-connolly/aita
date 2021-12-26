@@ -4,6 +4,7 @@ from typing import Union
 
 from spacy.tokens import DocBin
 from spacy.cli import fill_config
+from spacy.cli.init_config import save_config
 
 from nlp import paths, utils
 
@@ -52,5 +53,8 @@ def generate_config(run_id: str) -> Path:
     """Load spacy config from disk based on run id"""
     base_config_path = paths.get_config_dir() / "base.cfg"
     config_path = paths.get_config_dir() / f"{run_id}.cfg"
-    fill_config(config_path, base_config_path)
+    _, cfg = fill_config(config_path, base_config_path)
+    cfg["paths"]["train"] = str(paths.get_processed_data_dir() / run_id / "train.spacy")
+    cfg["paths"]["dev"] = str(paths.get_processed_data_dir() / run_id / "valid.spacy")
+    save_config(cfg, config_path)
     return config_path
