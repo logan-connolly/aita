@@ -1,8 +1,9 @@
+import shutil
 from types import SimpleNamespace
 
 import pytest
 
-from nlp import cli, http, io, paths
+from nlp import cli, http, io, model, paths
 
 
 @pytest.mark.parametrize("argv", [["download"], ["preprocess"], ["train"]])
@@ -55,7 +56,13 @@ def test_preprocess(monkeypatch, tmp_path, sample_posts_id):
     assert (processed_dir / sample_posts_id / "valid.spacy").exists()
 
 
-# def test_train(monkeypatch, tmp_path, sample_posts_id):
-#     """Test that training model works"""
-#     monkeypatch.setattr(io.paths, "get_config_dir", lambda: tmp_path)
-#     config = io.generate_config(sample_posts_id)
+def test_train(monkeypatch, tmp_path, sample_posts_id):
+    """Test that training model works"""
+    base_config = paths.get_config_dir() / "base.cfg"
+    monkeypatch.setattr(io.paths, "get_config_dir", lambda: tmp_path)
+    shutil.copy(base_config, paths.get_config_dir() / "base.cfg")
+    monkeypatch.setattr(io.paths, "get_model_dir", lambda: tmp_path)
+    monkeypatch.setattr(model, "train", lambda *_: None)
+
+    train_dir = cli.train(sample_posts_id)
+    assert train_dir.exists()
