@@ -10,7 +10,7 @@ coverage: # Run unittests tests and calculate coverage
 	poetry run mypy nlp
 
 mypy: # Run mypy static analysis tests
-	poetry run mypy --ignore-missing-imports app
+	poetry run mypy --ignore-missing-imports nlp
 
 clean: # Clean up cache files
 	@find . -type f -name "*.py[co]" -delete

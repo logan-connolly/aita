@@ -13,6 +13,7 @@ requests = "^2.26.0"
 pytest = "^6.2.5"
 coverage = {extras = ["toml"], version = "^6.2"}
 mypy = "^0.930"
+types-requests = "^2.26.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
