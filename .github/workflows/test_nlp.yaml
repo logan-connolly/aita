@@ -24,4 +24,4 @@ jobs:
       - name: Install dependencies
         run: make -C nlp bootstrap
       - name: Test and calculate coverage
-        run: make -C nlp test
+        run: make -C nlp coverage
