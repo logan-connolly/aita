@@ -45,6 +45,5 @@ def test_generate_config(monkeypatch, tmp_path, sample_posts_id):
     base_config = paths.get_config_dir() / "base.cfg"
     monkeypatch.setattr(paths, "get_config_dir", lambda: tmp_path)
     shutil.copy(base_config, paths.get_config_dir() / "base.cfg")
-    config = io.generate_config(sample_posts_id)
-    assert config["paths"]["train"] is not None
-    assert config["paths"]["dev"] is not None
+    config_path = io.generate_config(sample_posts_id)
+    assert config_path.exists()

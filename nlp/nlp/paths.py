@@ -24,3 +24,8 @@ def get_processed_data_dir() -> Path:
 def get_config_dir() -> Path:
     """Returns path object to configs data directory"""
     return get_data_dir() / "configs"
+
+
+def get_model_dir() -> Path:
+    """Returns path object to output (model) data directory"""
+    return get_data_dir() / "output"
