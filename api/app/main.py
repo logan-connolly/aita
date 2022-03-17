@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
+from app.core import event_handlers
 from app.core.config import settings
-from app.core.event_handlers import start_app_handler, stop_app_handler
 
 
 def create_app() -> FastAPI:
@@ -17,11 +17,11 @@ def create_app() -> FastAPI:
 
     @app.on_event("startup")
     async def startup():
-        await start_app_handler(app)
+        await event_handlers.start_app(app)
 
     @app.on_event("shutdown")
     async def shutdown():
-        await stop_app_handler(app)
+        await event_handlers.stop_app(app)
 
     return app
 

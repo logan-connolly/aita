@@ -8,7 +8,7 @@ from app.core.services.predict import AitaPredictor
 from app.core.services.reddit import get_reddit_connection, get_reddit_user
 
 
-async def start_app_handler(app: FastAPI) -> None:
+async def start_app(app: FastAPI) -> None:
     """Services to start upon app launch"""
 
     app.state.model = AitaPredictor(classifier=DummyClassifier())
@@ -19,6 +19,6 @@ async def start_app_handler(app: FastAPI) -> None:
     add_pagination(app)
 
 
-async def stop_app_handler(app: FastAPI) -> None:
+async def stop_app(app: FastAPI) -> None:
     """Services to stop upon app shutdown"""
     await app.state.reddit.close()
