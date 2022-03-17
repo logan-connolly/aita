@@ -5,5 +5,5 @@ from sqlalchemy import MetaData
 from app.core.config import settings
 
 metadata = MetaData()
-database = Database(url=settings.URI)
+database = Database(url=settings.uri)
 models = ModelRegistry(database=database)

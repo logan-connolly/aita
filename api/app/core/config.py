@@ -1,13 +1,6 @@
 from pydantic import BaseSettings
 
 
-class ApiConfig(BaseSettings):
-    title: str = "AITA"
-    version: str = "/api/v1"
-    openapi: str = "/api/v1/openapi.json"
-    debug: bool = False
-
-
 class PostgresConfig(BaseSettings):
     user: str
     password: str
@@ -16,8 +9,6 @@ class PostgresConfig(BaseSettings):
 
     class Config:
         env_prefix = "POSTGRES_"
-        env_file = ".env"
-        env_file_encoding = "utf-8"
 
 
 class RedditConfig(BaseSettings):
@@ -28,34 +19,15 @@ class RedditConfig(BaseSettings):
 
     class Config:
         env_prefix = "REDDIT_"
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-
-
-class WebSettings(BaseSettings):
-    port: int = 8080
-
-    class Config:
-        env_prefix = "WEB_"
-        env_file = ".env"
-        env_file_encoding = "utf-8"
 
 
 class Settings(BaseSettings):
-    api = ApiConfig()
     pg = PostgresConfig()
     reddit = RedditConfig()
-    web = WebSettings()
-
-    MODEL_PATH: str = "example/path"
-    URI: str = f"postgresql://{pg.user}:{pg.password}@{pg.host}/{pg.db}"
-    BACKEND_CORS_ORIGINS: list[str] = [
-        "http://localhost",
-        f"http://localhost:{web.port}",
-    ]
-
-    class Config:
-        case_sensitive = True
+    debug: bool = False
+    api_version: str = "/api/v1"
+    uri: str = f"postgresql://{pg.user}:{pg.password}@{pg.host}/{pg.db}"
+    async_uri: str = f"postgresql+asyncpg://{pg.user}:{pg.password}@{pg.host}/{pg.db}"
 
 
 settings = Settings()

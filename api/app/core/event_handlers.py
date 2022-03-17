@@ -19,7 +19,7 @@ async def start_app_handler(app: FastAPI) -> None:
     app.state.reddit = await get_reddit_connection(settings.reddit)
     app.state.user = await get_reddit_user(app.state.reddit)
 
-    app.include_router(api_router, prefix=settings.api.version)
+    app.include_router(api_router, prefix=settings.api_version)
     add_pagination(app)
     add_cors_middleware(app)
 

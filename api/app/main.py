@@ -7,9 +7,12 @@ from app.core.event_handlers import start_app_handler, stop_app_handler
 def create_app() -> FastAPI:
 
     app = FastAPI(
-        title=settings.api.title,
-        openapi_url=settings.api.openapi,
-        debug=settings.api.debug,
+        debug=settings.debug,
+        title="Am I the asshole? (AITA)",
+        description="Find out whether you are the asshole of a given story",
+        docs_url=None,
+        redoc_url=None,
+        openapi_url=None,
     )
 
     @app.on_event("startup")
