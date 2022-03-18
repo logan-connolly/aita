@@ -1,21 +1,17 @@
-from pydantic import BaseModel
-
 from app.core.constants import AitaLabel
+from app.schemas.base import BaseSchema
 
 
-class PostSchema(BaseModel):
-    reddit_id: str
+class PostSchemaBase(BaseSchema):
+    reddit_str: str
+    text: str
     title: str
+
+
+class InPostSchema(PostSchemaBase):
     label: AitaLabel
-    text: str
 
 
-class PostDB(BaseModel):
+class PostSchema(PostSchemaBase):
     id: int
-    reddit_id: str
-    title: str
     label: str
-    text: str
-
-    class Config:
-        orm_mode = True

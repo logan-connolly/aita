@@ -1,7 +1,7 @@
-from asyncpg.exceptions import UniqueViolationError
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi_pagination import Page, paginate
-from orm.exceptions import NoMatch
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.ext.asyncio.session import AsyncSession
 from starlette.status import (
     HTTP_200_OK,
     HTTP_201_CREATED,
@@ -9,48 +9,37 @@ from starlette.status import (
     HTTP_404_NOT_FOUND,
 )
 
-from app.models.post import Post
-from app.schemas.post import PostDB, PostSchema
+from app.core.exceptions import DoesNotExist
+from app.db.dal.posts import PostsDAL
+from app.db.session import get_db
+from app.schemas.post import InPostSchema, PostSchema
 
 router = APIRouter()
 
 
-@router.get("/", response_model=Page[PostDB], status_code=HTTP_200_OK)
-async def get_posts():
-    """Get list of of AITA posts."""
-    posts = await Post.objects.all()
-    return paginate(posts)
-
-
-@router.post("/", response_model=PostDB, status_code=HTTP_201_CREATED)
-async def add_post(payload: PostSchema):
-    """Add AITA post to database."""
+@router.post("/", response_model=PostSchema, status_code=HTTP_201_CREATED)
+async def add_post(payload: InPostSchema, db: AsyncSession = Depends(get_db)):
+    """Add AITA reddit post to database."""
+    dal = PostsDAL(db)
     try:
-        return await Post.objects.create(**payload.dict())
-    except UniqueViolationError as err:
+        return dal.create(payload)
+    except IntegrityError as err:
         raise HTTPException(HTTP_400_BAD_REQUEST, "Post exists") from err
 
 
-@router.get("/{post_id}/", response_model=PostDB, status_code=HTTP_200_OK)
-async def get_post(post_id: int):
-    """Retrieve AITA post by id."""
+@router.get("/{post_id}/", response_model=PostSchema, status_code=HTTP_200_OK)
+async def get_post(post_id: int, db: AsyncSession = Depends(get_db)):
+    """Retrieve AITA reddit post by id."""
+    dal = PostsDAL(db)
     try:
-        return await Post.objects.get(id=post_id)
-    except NoMatch as err:
+        return await dal.get_by_id(post_id)
+    except DoesNotExist as err:
         raise HTTPException(HTTP_404_NOT_FOUND, "Post not found") from err
 
 
-@router.put("/{post_id}/", response_model=PostDB, status_code=HTTP_200_OK)
-async def update_post(post_id: int, payload: PostSchema):
-    """Update attributes of AITA post."""
-    post = await get_post(post_id)
-    await post.update(**payload.dict())
-    return await get_post(post_id)
-
-
-@router.delete("/{post_id}/", response_model=PostDB, status_code=HTTP_200_OK)
-async def remove_post(post_id: int):
-    """Remove AITA posts by id."""
-    post = await get_post(post_id)
-    await post.delete()
-    return post
+@router.get("/", response_model=Page[PostSchema], status_code=HTTP_200_OK)
+async def get_posts(db: AsyncSession = Depends(get_db)):
+    """Get list of of AITA reddit posts."""
+    dal = PostsDAL(db)
+    posts = await dal.get_all()
+    return paginate(posts)
