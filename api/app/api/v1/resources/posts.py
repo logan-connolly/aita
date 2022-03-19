@@ -20,9 +20,8 @@ router = APIRouter()
 @router.post("/", response_model=PostSchema, status_code=HTTP_201_CREATED)
 async def add_post(payload: InPostSchema, db: AsyncSession = Depends(get_db)):
     """Add AITA reddit post to database."""
-    dal = PostsDAL(db)
     try:
-        return dal.create(payload)
+        return PostsDAL(db).create(payload)
     except IntegrityError as err:
         raise HTTPException(HTTP_400_BAD_REQUEST, "Post exists") from err
 
@@ -30,9 +29,8 @@ async def add_post(payload: InPostSchema, db: AsyncSession = Depends(get_db)):
 @router.get("/{post_id}/", response_model=PostSchema, status_code=HTTP_200_OK)
 async def get_post(post_id: int, db: AsyncSession = Depends(get_db)):
     """Retrieve AITA reddit post by id."""
-    dal = PostsDAL(db)
     try:
-        return await dal.get_by_id(post_id)
+        return await PostsDAL(db).get_by_id(post_id)
     except DoesNotExist as err:
         raise HTTPException(HTTP_404_NOT_FOUND, "Post not found") from err
 
@@ -40,6 +38,5 @@ async def get_post(post_id: int, db: AsyncSession = Depends(get_db)):
 @router.get("/", response_model=Page[PostSchema], status_code=HTTP_200_OK)
 async def get_posts(db: AsyncSession = Depends(get_db)):
     """Get list of of AITA reddit posts."""
-    dal = PostsDAL(db)
-    posts = await dal.get_all()
+    posts = await PostsDAL(db).get_all()
     return paginate(posts)
