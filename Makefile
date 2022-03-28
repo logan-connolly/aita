@@ -19,9 +19,9 @@ lint: # Check and format via pre-commit
 
 tests: # Launch services and test
 	@docker-compose up -d api
-	@echo "Sleeping for 15 seconds while DB migrates ..."
-	@sleep 15
-	@docker-compose exec api pytest tests
+	@echo "Sleeping for 5 seconds while DB migrates ..."
+	@sleep 5
+	@docker-compose exec api pytest tests/api/test_posts.py
 
 clean: # Clean up cache files
 	@find . -type f -name "*.py[co]" -delete
