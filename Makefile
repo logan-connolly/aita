@@ -11,8 +11,8 @@ pull: # Pull required docker images
 
 run: # Start application containers
 	@docker-compose up -d
-	@echo "Sleeping for 15 seconds while DB migrates ..."
-	@sleep 15
+	@echo "Sleeping for 5 seconds while DB migrates ..."
+	@sleep 5
 
 lint: # Check and format via pre-commit
 	@pre-commit run --all-files
