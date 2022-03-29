@@ -15,6 +15,7 @@ services:
   api:
     build:
       context: api
+      target: development
     image: lvconnolly/aita_api:dev
     ports:
       - ${API_PORT:-8000}:8000

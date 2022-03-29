@@ -1,6 +1,6 @@
-FROM python:3.9-slim-buster
+FROM python:3.9-slim-buster as production
 
-COPY requirements.txt /tmp/requirements.txt
+COPY requirements/production.txt /tmp/requirements.txt
 
 RUN apt-get update && apt-get install -y gcc \
   && python -m venv /opt/venv \
@@ -20,3 +20,7 @@ WORKDIR /usr/src/app
 COPY . .
 EXPOSE 8000
 CMD ["./start.sh"]
+
+FROM production as development
+COPY ./requirements/development.txt /tmp/requirements.txt
+RUN /opt/venv/bin/pip install -r /tmp/requirements.txt
