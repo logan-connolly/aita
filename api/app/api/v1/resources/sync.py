@@ -7,7 +7,7 @@ from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_404_NOT_FOUND
 
 from app.core.constants import AITA_SUBREDDIT_NAME
 from app.core.services.reddit import extract_post_info
-from app.models.post import Post
+from app.db.tables.posts import Post
 from app.schemas.reddit import RedditLastSync, SortFilter
 
 router = APIRouter()

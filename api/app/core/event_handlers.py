@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi_pagination import add_pagination
 
-from app.api.api_v1.routes import api_router
+from app.api.v1.routes import api_router
 from app.core.config import settings
 from app.core.services.classifiers.dummy import DummyClassifier
 from app.core.services.predict import AitaPredictor

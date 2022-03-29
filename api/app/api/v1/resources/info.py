@@ -4,7 +4,7 @@ from fastapi import APIRouter
 from starlette.requests import Request
 from starlette.status import HTTP_200_OK
 
-from app.models.post import Post
+from app.db.tables.posts import Post
 from app.schemas.reddit import PostCount, RedditInfo
 
 router = APIRouter()
