@@ -1,6 +1,9 @@
+import uuid
+
 from sqlalchemy.sql import func
 from sqlalchemy.sql.schema import Column
-from sqlalchemy.sql.sqltypes import DateTime, Integer, String, Text
+from sqlalchemy.sql.sqltypes import DateTime, String, Text
+from sqlalchemy.dialects.postgresql import UUID
 
 from app.db.tables.base import Base
 
@@ -10,8 +13,7 @@ class Post(Base):
 
     __tablename__ = "posts"
 
-    id = Column(Integer, primary_key=True)
-    reddit_id = Column(String(6), unique=True, nullable=False)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     title = Column(String(255), nullable=False, unique=True)
     label = Column(String(255), nullable=False, unique=True)
     text = Column(Text(), nullable=False, unique=True)
