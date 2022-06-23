@@ -10,6 +10,10 @@ pytest: # Run unittests tests
 mypy: # Run mypy static analysis tests
 	poetry run mypy --ignore-missing-imports app
 
+reqs: # Export dependency requirements files
+	poetry export --without-hashes -o ./requirements/production.txt
+	poetry export --without-hashes --dev -o ./requirements/development.txt
+
 clean: # Clean up cache files
 	@find . -type f -name "*.py[co]" -delete
 	@find . -type d -name "__pycache__" -delete
