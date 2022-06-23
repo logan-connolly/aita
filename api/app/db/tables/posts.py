@@ -14,7 +14,7 @@ class Post(Base):
     __tablename__ = "posts"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    title = Column(String(255), nullable=False, unique=True)
-    label = Column(String(255), nullable=False, unique=True)
-    text = Column(Text(), nullable=False, unique=True)
+    title = Column(String(255), nullable=False)
+    label = Column(String(255), nullable=False)
+    text = Column(Text(), nullable=False)
     ts = Column(DateTime, default=func.now())
