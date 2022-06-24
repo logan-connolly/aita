@@ -6,7 +6,8 @@ from asyncprawcore.exceptions import OAuthException
 
 from app.core.config import RedditConfig, settings
 from app.core.constants import AitaLabel
-from app.schemas.post import PostSchema
+from app.db.tables.posts import Post
+from app.schemas.post import InPostSchema
 
 
 async def get_reddit_connection(config: RedditConfig) -> Reddit:
@@ -31,7 +32,7 @@ async def get_reddit_user(reddit: Reddit) -> str:
         ) from err
 
 
-async def extract_post_info(post: Submission) -> PostSchema:
+async def extract_post_info(post: Submission) -> InPostSchema:
     """Extract information from post needed for training model"""
 
     def convert_label(flair: str) -> Optional[str]:
@@ -43,11 +44,9 @@ async def extract_post_info(post: Submission) -> PostSchema:
             "Not enough info": AitaLabel.ESH,
         }.get(flair, AitaLabel.NAN)
 
-    return PostSchema(
-        **{
-            "reddit_id": post.id,
-            "title": post.title[:255],
-            "label": convert_label(post.link_flair_text),
-            "text": post.selftext,
-        }
+    return InPostSchema(
+        id=Post.generate_post_id(post.id),
+        title=post.title[:255],
+        label=convert_label(post.link_flair_text),
+        text=post.selftext,
     )

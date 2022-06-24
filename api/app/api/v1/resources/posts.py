@@ -1,3 +1,5 @@
+import uuid
+
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi_pagination import Page, paginate
 from sqlalchemy.exc import IntegrityError
@@ -21,18 +23,18 @@ router = APIRouter()
 async def add_post(payload: InPostSchema, db: AsyncSession = Depends(get_db)):
     """Add AITA reddit post to database."""
     try:
-        return PostsDAL(db).create(payload)
-    except IntegrityError as err:
-        raise HTTPException(HTTP_400_BAD_REQUEST, "Post exists") from err
+        return await PostsDAL(db).create(payload)
+    except IntegrityError:
+        raise HTTPException(HTTP_400_BAD_REQUEST, "Post exists") from None
 
 
 @router.get("/{post_id}/", response_model=PostSchema, status_code=HTTP_200_OK)
-async def get_post(post_id: int, db: AsyncSession = Depends(get_db)):
+async def get_post(post_id: uuid.UUID, db: AsyncSession = Depends(get_db)):
     """Retrieve AITA reddit post by id."""
     try:
         return await PostsDAL(db).get_by_id(post_id)
-    except DoesNotExist as err:
-        raise HTTPException(HTTP_404_NOT_FOUND, "Post not found") from err
+    except DoesNotExist:
+        raise HTTPException(HTTP_404_NOT_FOUND, "Post not found") from None
 
 
 @router.get("/", response_model=Page[PostSchema], status_code=HTTP_200_OK)

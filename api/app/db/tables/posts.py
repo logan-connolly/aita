@@ -18,3 +18,7 @@ class Post(Base):
     label = Column(String(255), nullable=False)
     text = Column(Text(), nullable=False)
     ts = Column(DateTime, default=func.now())
+
+    @staticmethod
+    def generate_post_id(reddit_id: str) -> uuid.UUID:
+        return uuid.uuid5(uuid.NAMESPACE_URL, f"/posts/{reddit_id}")
