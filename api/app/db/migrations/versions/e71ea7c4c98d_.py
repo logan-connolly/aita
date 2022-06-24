@@ -1,12 +1,12 @@
 """Initialize Post model
 
 Revision ID: e71ea7c4c98d
-Revises: 
+Revises:
 Create Date: 2022-06-23 18:39:40.574080
 
 """
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.

@@ -1,9 +1,9 @@
 import uuid
 
+from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from sqlalchemy.sql.schema import Column
 from sqlalchemy.sql.sqltypes import DateTime, String, Text
-from sqlalchemy.dialects.postgresql import UUID
 
 from app.db.tables.base import Base
 

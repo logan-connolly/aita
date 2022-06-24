@@ -1,6 +1,6 @@
 import abc
-from typing import Generic, Optional, Type, TypeVar
 import uuid
+from typing import Generic, Type, TypeVar
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
