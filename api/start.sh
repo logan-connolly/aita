@@ -13,8 +13,10 @@ echo "Running alembic migrations ..."
 alembic upgrade head
 
 # Start app server
-if [[ $DEBUG = true ]]; then
+if [[ $ENV = "debug" ]]; then
   exec python -u -m debugpy --listen localhost:5678 -m uvicorn --host 0.0.0.0 --port 8000 "$APP_MODULE"
+elif [[ $ENV = "dev" ]]; then
+  exec uvicorn --reload --host 0.0.0.0 --port 8000 "$APP_MODULE"
 else
   exec gunicorn -c "$GUNICORN_CONF" "$APP_MODULE"
 fi

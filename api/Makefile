@@ -4,8 +4,14 @@ bootstrap: # Install dependencies via poetry
 	poetry install
 	poetry run python -m spacy download en_core_web_sm
 
+debugserver: # Launch debug uvicorn server locally
+	ENV=debug PYTHONPATH=. ./start.sh
+
 devserver: # Launch dev uvicorn server locally
-	DEBUG=true PYTHONPATH=. ./start.sh
+	ENV=dev PYTHONPATH=. ./start.sh
+
+prodserver: # Launch prod gunicorn server locally
+	ENV= PYTHONPATH=. ./start.sh
 
 pytest: # Run unittests tests
 	poetry run pytest tests
