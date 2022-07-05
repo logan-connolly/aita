@@ -1,51 +1,22 @@
-from json import dumps
-
-from starlette.status import HTTP_200_OK, HTTP_201_CREATED
+from httpx import AsyncClient
+from starlette import status
 
 from app.core.config import settings
-
-POST = dict(reddit_id="xkl123", title="AITA?", label="NTA", text="Once upon a time")
-POST_ID = None
-
-# TODO: don't make fixtures mutability - should work asyncronously as well
-# TODO: look again for wrappers/solutions for creating DB sandbox
+from app.db.tables import Post
 
 
-def test_add_post(client):
-    """Test that post is added to DB"""
-    global POST_ID
-    resp = client.post(f"{settings.api_version}/posts/", data=dumps(POST))
-    POST_ID = resp.json()["id"]
-    POST.update({"id": POST_ID})
-    assert resp.status_code == HTTP_201_CREATED
-    assert resp.json() == POST
+async def test_post_create(async_client: AsyncClient):
+    """Test that ingredient can be created"""
+    url = f"{settings.api_version}/posts/"
+    id_ = str(Post.generate_post_id("xkl123"))
+    payload = {"id": id_, "title": "AITA?", "label": "NTA", "text": "test"}
 
+    response = await async_client.post(url, json=payload)
 
-def test_get_post(client):
-    """Test that post can be retrieved from DB by id"""
-    resp = client.get(f"{settings.api_version}/posts/{POST_ID}/")
-    assert resp.status_code == HTTP_200_OK
-    assert resp.json() == POST
-
-
-def test_get_posts(client):
-    """Test that a list of posts can be retrieved from DB"""
-    resp = client.get(f"{settings.api_version}/posts/")
-    assert resp.status_code == HTTP_200_OK
-    assert resp.json()["total"] >= 1
-
-
-def test_update_post(client):
-    """Test that dummy post is properly updated"""
-    POST["label"] = "YTA"
-    payload = dumps(POST)
-    resp = client.put(f"{settings.api_version}/posts/{POST_ID}/", data=payload)
-    assert resp.status_code == HTTP_200_OK
-    assert resp.json() == POST
-
-
-def test_remove_post(client):
-    """Test that dummy post is deleted from DB"""
-    resp = client.delete(f"{settings.api_version}/posts/{POST_ID}/")
-    assert resp.status_code == HTTP_200_OK
-    assert resp.json() == POST
+    assert response.status_code == status.HTTP_201_CREATED
+    assert response.json() == {
+        "id": response.json()["id"],
+        "title": payload["title"],
+        "label": payload["label"],
+        "text": payload["text"],
+    }
