@@ -1,9 +1,9 @@
 .DEFAULT_GOAL=help
 
-build: clean # Build images locally
+build: # Build images locally
 	@docker-compose build $(service)
 
-publish: build # Push images to docker registry
+push: # Push images to docker registry
 	@docker-compose push $(service)
 
 pull: # Pull required docker images
