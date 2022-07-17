@@ -6,25 +6,18 @@ import pytest
 from nlp import cli, http, io, model, paths
 
 
-@pytest.mark.parametrize("argv", [["download"], ["preprocess"], ["train"]])
+@pytest.mark.parametrize(
+    "argv",
+    [
+        [cli.Command.DOWNLOAD.value],
+        [cli.Command.PREPROCESS.value],
+        [cli.Command.TRAIN.value],
+    ],
+)
 def test_parse_command_args(argv):
     """Test that args are parsed properly"""
     args = cli.parse_args(argv)
     assert args.command == argv[0]
-
-
-def test_validate_args():
-    """Test that args are validated correctly"""
-    args = cli.parse_args(argv=["download"])
-    validated_args = cli.validate_args(args)
-    assert validated_args.command == "download"
-
-
-def test_validate_args_invalid():
-    """Assertion error should be raised when invalid"""
-    with pytest.raises(AssertionError):
-        args = cli.parse_args(argv=["invalid_command"])
-        cli.validate_args(args)
 
 
 def test_download(monkeypatch, tmp_path, sample_posts):

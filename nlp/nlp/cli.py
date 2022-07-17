@@ -1,23 +1,21 @@
 import argparse
+import enum
 from pathlib import Path
 from typing import Optional, Sequence
 
 from nlp import http, io, model, paths, transform
 
 
-def validate_args(args: argparse.Namespace) -> argparse.Namespace:
-    """Make sure that passed args are correct"""
-    acceptable_commands = ("download", "preprocess", "train")
-    assert args.command in acceptable_commands, f"Unsupported command: {args.command!r}"
-    return args
+class Command(enum.Enum):
+    DOWNLOAD = "download"
+    PREPROCESS = "preprocess"
+    TRAIN = "train"
 
 
 def parse_args(argv: Optional[Sequence[str]]) -> argparse.Namespace:
     """Parse command line arguments from user"""
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "command", help="Available commands to perform (download, preprocess)"
-    )
+    parser.add_argument("command", choices=[c.value for c in Command])
     parser.add_argument(
         "--id", dest="id", help="ID for run id that is used to fetch stored data"
     )

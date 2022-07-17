@@ -8,16 +8,18 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
     """Command interface for aita nlp command line utility"""
 
     args = cli.parse_args(argv)
-    validated_args = cli.validate_args(args)
 
-    if validated_args.command == "download":
-        cli.download(validated_args.url)
+    if args.command == cli.Command.DOWNLOAD.value:
+        cli.download(args.url)
 
-    if validated_args.command == "preprocess":
-        cli.preprocess(validated_args.id, validated_args.labels)
+    elif args.command == cli.Command.PREPROCESS.value:
+        cli.preprocess(args.id, args.labels)
 
-    if validated_args.command == "train":
-        cli.train(validated_args.id)
+    elif args.command == cli.Command.TRAIN.value:
+        cli.train(args.id)
+
+    else:
+        raise ValueError("Invalid command passed.")
 
 
 if __name__ == "__main__":
