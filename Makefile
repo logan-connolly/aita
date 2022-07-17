@@ -11,17 +11,13 @@ pull: # Pull required docker images
 
 run: # Start application containers
 	@docker-compose up -d
-	@echo "Sleeping for 5 seconds while DB migrates ..."
-	@sleep 5
 
 lint: # Check and format via pre-commit
 	@pre-commit run --all-files
 
 tests: # Launch services and test
-	@docker-compose up -d api
-	@echo "Sleeping for 5 seconds while DB migrates ..."
-	@sleep 5
-	@docker-compose exec api pytest tests/api/test_posts.py
+	@docker-compose run api pytest tests
+	@cd nlp && $(MAKE) coverage
 
 clean: # Clean up cache files
 	@find . -type f -name "*.py[co]" -delete
