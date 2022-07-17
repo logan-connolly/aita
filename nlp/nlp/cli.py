@@ -16,15 +16,9 @@ def parse_args(argv: Optional[Sequence[str]]) -> argparse.Namespace:
     """Parse command line arguments from user"""
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=[c.value for c in Command])
-    parser.add_argument(
-        "--id", dest="id", help="ID for run id that is used to fetch stored data"
-    )
-    parser.add_argument(
-        "--labels", dest="labels", default="", help="Comma-separted string of labels"
-    )
-    parser.add_argument(
-        "--url", dest="url", help="Url for fetching posts from running API instance"
-    )
+    parser.add_argument("--id", help="ID for run id that is used to fetch stored data")
+    parser.add_argument("--labels", default="", help="Comma-separted string of labels")
+    parser.add_argument("--url", help="Url for fetching posts")
     return parser.parse_args(argv)
 
 
