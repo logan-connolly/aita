@@ -1,9 +1,21 @@
 import json
+import shutil
+import uuid
+from pathlib import Path
 
 import pytest
 from spacy.tokens import DocBin
 
-from nlp import paths, transform, utils
+from nlp import paths, transform
+
+
+@pytest.fixture
+def data_dirs(tmp_path: Path, monkeypatch) -> paths.DataDirs:
+    tmp_data_dirs = paths.DataDirs.create(tmp_path)
+    original_base_cfg = paths.DATA_DIRS.configs / "base.cfg"
+    shutil.copy(original_base_cfg, tmp_data_dirs.configs / "base.cfg")
+    monkeypatch.setattr(paths, "DATA_DIRS", tmp_data_dirs)
+    return tmp_data_dirs
 
 
 @pytest.fixture
@@ -28,19 +40,18 @@ def sample_posts() -> list[transform.RawPost]:
 
 
 @pytest.fixture
-def sample_posts_id(monkeypatch, tmp_path, sample_posts) -> str:
+def sample_posts_id(
+    data_dirs: paths.DataDirs, sample_posts: list[transform.RawPost]
+) -> str:
     """Take sample post fixture and write to tmp directory (mocked as data/raw)"""
-    monkeypatch.setattr(paths, "get_raw_data_dir", lambda: tmp_path)
-    run_id = utils.generate_run_id()
-    mock_posts_dir = tmp_path / run_id
-    mock_posts_dir.mkdir(parents=True, exist_ok=True)
-    mock_posts_path = mock_posts_dir / "posts.json"
-    mock_posts_path.write_text(json.dumps(sample_posts))
+    run_id = str(uuid.uuid4())
+    run_id_path = data_dirs.create_run_id(paths.DataDir.RAW.value, run_id)
+    (run_id_path / "posts.json").write_text(json.dumps(sample_posts))
     return run_id
 
 
 @pytest.fixture
-def sample_doc_bin(sample_posts) -> DocBin:
+def sample_doc_bin(sample_posts: list[transform.RawPost]) -> DocBin:
     """Convert sample posts to doc bin"""
     tuple_list = transform.parse_posts(sample_posts)
     docs = transform.make_docs(tuple_list)

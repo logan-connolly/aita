@@ -31,13 +31,20 @@ def download(api_url: str) -> Path:
 def preprocess(run_id: str, labels: str) -> Path:
     """Read in raw posts and process data to satisfy spacy train api"""
     raw_posts = io.read_raw_posts(run_id)
+
     parsed_posts = transform.parse_posts(raw_posts)
     filtered_posts = transform.filter_posts(parsed_posts, labels)
+
     docs = transform.make_docs(filtered_posts)
     split_data = transform.split_data(docs, train_ratio=0.6)
-    io.write_train_docs(transform.convert_to_doc_binary(split_data.train), run_id)
-    io.write_valid_docs(transform.convert_to_doc_binary(split_data.valid), run_id)
-    return paths.get_processed_data_dir()
+
+    train_docs = transform.convert_to_doc_binary(split_data.train)
+    valid_docs = transform.convert_to_doc_binary(split_data.valid)
+
+    io.write_docs(train_docs, transform.Split.TRAIN.value, run_id)
+    io.write_docs(valid_docs, transform.Split.VALID.value, run_id)
+
+    return paths.DATA_DIRS.processed
 
 
 def train(run_id: str) -> Path:

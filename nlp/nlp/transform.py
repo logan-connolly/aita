@@ -1,3 +1,4 @@
+import enum
 import math
 import random
 from dataclasses import dataclass
@@ -10,6 +11,11 @@ from nlp.io import RawPost
 TextLabel = tuple[str, str]
 
 nlp = spacy.load("en_core_web_sm")
+
+
+class Split(enum.Enum):
+    TRAIN = "train"
+    VALID = "valid"
 
 
 @dataclass
@@ -34,10 +40,10 @@ def parse_posts(posts: list[RawPost]) -> list[TextLabel]:
 
 def filter_posts(posts: list[TextLabel], labels: str = "") -> list[TextLabel]:
     """Filter out posts based on comma-separated labels string"""
-    if labels:
-        label_set = set(labels.split(","))
-        return [(text, label) for text, label in posts if label in label_set]
-    return posts
+    if not labels:
+        return posts
+    label_set = set(labels.split(","))
+    return [(text, label) for text, label in posts if label in label_set]
 
 
 def make_docs(posts: list[TextLabel]) -> list[Doc]:

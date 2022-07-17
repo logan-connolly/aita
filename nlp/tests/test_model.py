@@ -1,12 +1,11 @@
-from nlp import model, paths, utils
+from nlp import model, paths
 
 
-def test_fit(monkeypatch, tmp_path):
+def test_fit(data_dirs: paths.DataDirs, sample_posts_id: str, monkeypatch):
     """Test that directories exists after training"""
     monkeypatch.setattr(model, "train", lambda *_: None)
-    monkeypatch.setattr(paths, "get_model_dir", lambda: tmp_path)
+    config_path = data_dirs.models / "fake.cfg"
 
-    run_id = utils.generate_run_id()
-    config_path = tmp_path / "fake.cfg"
-    train_dir = model.fit(run_id, config_path)
+    train_dir = model.fit(sample_posts_id, config_path)
+
     assert train_dir.exists()
