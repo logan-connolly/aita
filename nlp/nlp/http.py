@@ -7,9 +7,9 @@ PAGE_LIMIT = 50
 
 def get_number_of_pages(api_url: str) -> int:
     """Get number of available posts from info endpoint"""
-    resp = requests.get(f"{api_url}/sync/")
+    resp = requests.get(f"{api_url}/posts/")
     assert resp.status_code == 200, f"Request failed: {resp.url}"
-    n_posts = int(resp.json()["posts"])
+    n_posts = int(resp.json()["total"])
     return n_posts // PAGE_LIMIT
 
 

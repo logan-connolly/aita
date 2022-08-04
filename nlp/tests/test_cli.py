@@ -6,6 +6,7 @@ from nlp import cli, http, model
 
 FAKE_ID = "68bc414d-918a-43e7-8d2b-9bd2f7783360"
 EXAMPLE_LABELS = "NTA,YTA"
+FAKE_URL = "http://fakeaddress:8000/api/v1"
 
 
 def test_parse_download_command():
@@ -35,21 +36,17 @@ def test_parse_train_command():
 @pytest.mark.usefixtures("data_dirs")
 def test_download(monkeypatch, sample_posts):
     """Test that posts can be downloaded from api"""
-    api_url = "http://fakeaddress:8000/api/v1"
 
-    def mock_requests(url: str):
-        if url == f"{api_url}/sync/":
-            return SimpleNamespace(
-                status_code=200, json=lambda: {"posts": len(sample_posts)}
-            )
-        else:
-            return SimpleNamespace(
-                status_code=200, json=lambda: {"items": sample_posts}
-            )
+    def mock_get_posts_response(url: str):
+        assert "/posts" in url
+        return SimpleNamespace(
+            status_code=200,
+            json=lambda: {"items": sample_posts, "total": len(sample_posts)},
+        )
 
-    monkeypatch.setattr(http.requests, "get", mock_requests)
+    monkeypatch.setattr(http.requests, "get", mock_get_posts_response)
+    raw_posts_path = cli.download(FAKE_URL)
 
-    raw_posts_path = cli.download(api_url)
     assert raw_posts_path.exists()
 
 
