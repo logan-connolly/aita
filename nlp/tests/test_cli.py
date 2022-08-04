@@ -4,19 +4,32 @@ import pytest
 
 from nlp import cli, http, model
 
+FAKE_ID = "68bc414d-918a-43e7-8d2b-9bd2f7783360"
+EXAMPLE_LABELS = "NTA,YTA"
 
-@pytest.mark.parametrize(
-    "argv",
-    [
-        [cli.Command.DOWNLOAD.value],
-        [cli.Command.PREPROCESS.value],
-        [cli.Command.TRAIN.value],
-    ],
-)
-def test_parse_command_args(argv):
-    """Test that args are parsed properly"""
+
+def test_parse_download_command():
+    argv = [cli.Command.DOWNLOAD.value]
     args = cli.parse_args(argv)
-    assert args.command == argv[0]
+
+    assert args.command == cli.Command.DOWNLOAD.value
+
+
+def test_parse_preprocess_command():
+    argv = [cli.Command.PREPROCESS.value, FAKE_ID, "--labels", EXAMPLE_LABELS]
+    args = cli.parse_args(argv)
+
+    assert args.command == cli.Command.PREPROCESS.value
+    assert args.id == FAKE_ID
+    assert args.labels == EXAMPLE_LABELS
+
+
+def test_parse_train_command():
+    argv = [cli.Command.TRAIN.value, FAKE_ID]
+    args = cli.parse_args(argv)
+
+    assert args.command == cli.Command.TRAIN.value
+    assert args.id == FAKE_ID
 
 
 @pytest.mark.usefixtures("data_dirs")

@@ -14,11 +14,23 @@ class Command(enum.Enum):
 
 def parse_args(argv: Optional[Sequence[str]]) -> argparse.Namespace:
     """Parse command line arguments from user"""
-    parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=[c.value for c in Command])
-    parser.add_argument("--id", help="ID for run id that is used to fetch stored data")
-    parser.add_argument("--labels", default="", help="Comma-separted string of labels")
-    parser.add_argument("--url", help="Url for fetching posts")
+    parser = argparse.ArgumentParser(description="Create NLP model.")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    download = subparsers.add_parser(Command.DOWNLOAD.value)
+    download.add_argument(
+        "--url",
+        default="http://localhost:8000/api/v1",
+        help="URL to the running AITA API (default: http://localhost:8000/api/v1).",
+    )
+
+    preprocess = subparsers.add_parser(Command.PREPROCESS.value)
+    preprocess.add_argument("id", help="Run ID to fetch stored data.")
+    preprocess.add_argument("--labels", default="", help="Comma-separted labels.")
+
+    train = subparsers.add_parser(Command.TRAIN.value)
+    train.add_argument("id", help="Run ID to fetch stored data.")
+
     return parser.parse_args(argv)
 
 
