@@ -19,11 +19,10 @@ services:
     image: lvconnolly/aita_api:dev
     ports:
       - ${API_PORT:-8000}:8000
-      - 5678:5678
     volumes:
       - ./api:/usr/src/app
     environment:
-      - DEBUG=${DEBUG:-False}
+      - ENV=${ENV:-dev}
       - POSTGRES_USER=${POSTGRES_USER:-aita}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-aita}
       - POSTGRES_HOST=${POSTGRES_HOST:-db}
