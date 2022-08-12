@@ -1,6 +1,5 @@
 import json
 from pathlib import Path
-from typing import Union
 
 from spacy.cli import fill_config
 from spacy.cli.init_config import save_config
@@ -8,7 +7,7 @@ from spacy.tokens import DocBin
 
 from nlp import paths
 
-RawPost = dict[str, Union[int, str]]
+RawPost = dict[str, int | str]
 
 
 def write_raw_posts(posts: list[RawPost]) -> Path:

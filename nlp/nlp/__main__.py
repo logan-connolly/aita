@@ -9,17 +9,19 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
 
     args = cli.parse_args(argv)
 
-    if args.command == cli.Command.DOWNLOAD.value:
-        cli.download(args.url)
+    match args.command:
 
-    elif args.command == cli.Command.PREPROCESS.value:
-        cli.preprocess(args.id, args.labels)
+        case cli.Command.DOWNLOAD.value:
+            cli.download(args.url)
 
-    elif args.command == cli.Command.TRAIN.value:
-        cli.train(args.id)
+        case cli.Command.PREPROCESS.value:
+            cli.preprocess(args.id, args.labels)
 
-    else:
-        raise ValueError("Invalid command passed.")
+        case cli.Command.TRAIN.value:
+            cli.train(args.id)
+
+        case _:
+            raise ValueError("Invalid command passed.")
 
 
 if __name__ == "__main__":

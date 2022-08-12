@@ -5,22 +5,23 @@ description = ""
 authors = ["Logan Connolly <logan.connolly@protonmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 spacy = "^3.2.1"
 requests = "^2.26.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.5"
+pytest = "^7.1.2"
 coverage = {extras = ["toml"], version = "^6.2"}
-mypy = "^0.930"
+mypy = "^0.971"
 types-requests = "^2.26.2"
+black = "^22.6.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.black]
-target-version = ['py38']
+target-version = ['py310']
 include = '\.pyi?$'
 
 [tool.isort]
