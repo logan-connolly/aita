@@ -1,14 +1,12 @@
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class PostgresConfig(BaseSettings):
-    user: str
-    password: str
-    host: str
-    db: str
-
-    class Config:
-        env_prefix = "POSTGRES_"
+    user: str = "aita"
+    password: str = "aita"
+    host: str = "localhost"
+    db: str = "aita_db"
+    model_config = SettingsConfigDict(env_prefix="POSTGRES_")
 
 
 class RedditConfig(BaseSettings):
@@ -16,14 +14,12 @@ class RedditConfig(BaseSettings):
     client_secret: str
     password: str
     username: str
-
-    class Config:
-        env_prefix = "REDDIT_"
+    model_config = SettingsConfigDict(env_prefix="REDDIT_")
 
 
 class Settings(BaseSettings):
-    pg = PostgresConfig()
-    reddit = RedditConfig()
+    pg: PostgresConfig = PostgresConfig()
+    reddit: RedditConfig = RedditConfig()
     debug: bool = False
     api_version: str = "/api/v1"
     uri: str = f"postgresql://{pg.user}:{pg.password}@{pg.host}/{pg.db}"

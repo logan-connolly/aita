@@ -1,0 +1,12 @@
+alembic
+asyncpg
+asyncpraw
+fastapi
+fastapi-pagination
+gunicorn
+loguru
+psycopg2-binary
+pydantic
+pydantic-settings
+spacy
+uvicorn

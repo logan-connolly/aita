@@ -23,8 +23,8 @@ class RedditLastSync(BaseModel):
 
 
 class PostCount(BaseModel):
-    YTA: Optional[int]
-    NTA: Optional[int]
-    ESH: Optional[int]
-    NAH: Optional[int]
-    NAN: Optional[int]
+    YTA: Optional[int] = None
+    NTA: Optional[int] = None
+    ESH: Optional[int] = None
+    NAH: Optional[int] = None
+    NAN: Optional[int] = None

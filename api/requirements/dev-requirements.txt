@@ -1,0 +1,6 @@
+asgi-lifespan
+debugpy
+httpx
+mypy
+pytest
+pytest-asyncio

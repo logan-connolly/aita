@@ -1,8 +1,7 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class BaseSchema(BaseModel):
     """All pydantic schemas should use ORM mode"""
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
