@@ -1,6 +1,5 @@
 from types import SimpleNamespace
 
-
 from nlp import http
 
 
@@ -11,7 +10,7 @@ def test_get_number_of_pages(monkeypatch):
         http.requests,
         "get",
         lambda _: SimpleNamespace(
-            status_code=200, json=lambda: {"posts": http.PAGE_LIMIT * expected_pages}
+            status_code=200, json=lambda: {"total": http.PAGE_LIMIT * expected_pages}
         ),
     )
     n_pages = http.get_number_of_pages(api_url="http://madeupurl:8000/api/v1")
