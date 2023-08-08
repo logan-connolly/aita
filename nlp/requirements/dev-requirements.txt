@@ -1,0 +1,4 @@
+pytest
+coverage[toml]
+mypy
+types-requests
