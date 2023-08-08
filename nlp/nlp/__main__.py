@@ -10,7 +10,6 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
     args = cli.parse_args(argv)
 
     match args.command:
-
         case cli.Command.DOWNLOAD.value:
             cli.download(args.url)
 

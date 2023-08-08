@@ -5,7 +5,6 @@ from app.core.config import settings
 
 
 def create_app() -> FastAPI:
-
     app = FastAPI(
         debug=settings.debug,
         title="Am I the asshole? (AITA)",
